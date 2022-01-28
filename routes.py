@@ -13,8 +13,7 @@ def add_game():
         return render_template("add_game.html")
     
     if request.method == "POST":
-        title = request.form["title"]
-        games.add_game(title)
+        request.form["title"]
     
         return redirect("/")
 

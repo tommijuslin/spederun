@@ -6,10 +6,7 @@
 <a href="/login">Login</a>
 {% endif %}
 
-<ul>
-    <li><a href="/add_game">Add game</a></li>
-</ul>
-
+<p><a href="/add_game">Add game</a></p>
 
 {% for game in games %}
 <a href="/game/{{ game.id }}">{{ game.title }}</a>

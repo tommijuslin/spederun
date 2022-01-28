@@ -12,7 +12,8 @@ CREATE TABLE games (
 
 CREATE TABLE platforms (
     id SERIAL PRIMARY KEY,
-    name TEXT
+    name TEXT,
+    UNIQUE(name)
 );
 
 CREATE TABLE games_platforms (
