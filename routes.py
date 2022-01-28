@@ -4,7 +4,7 @@ import games
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    return render_template("index.html", games=games.get_all_games())
 
 @app.route("/add_game", methods=["get", "post"])
 def add_game():

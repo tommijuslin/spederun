@@ -1,3 +1,9 @@
 <ul>
     <li> <a href="/add_game">Add game</a>
 </ul>
+
+<ul>
+    {% for game in games %}
+    <li>{{ game.title }}</li>
+    {% endfor %}
+</ul>
