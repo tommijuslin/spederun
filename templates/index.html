@@ -1,5 +1,13 @@
+{% if session.username %}
+<p>You are logged in as {{ session.username }}</p>
+<a href="/logout">Kirjaudu ulos</a>
+
+{% else %}
+<a href="/login">Login</a>
+{% endif %}
+
 <ul>
-    <li> <a href="/add_game">Add game</a>
+    <li><a href="/add_game">Add game</a></li>
 </ul>
 
 <ul>
