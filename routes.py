@@ -1,7 +1,8 @@
 from app import app
-from flask import render_template, request, redirect, session
+from flask import render_template, request, redirect, session, url_for
 from werkzeug.security import check_password_hash, generate_password_hash
 import games
+import runs
 
 @app.route("/")
 def index():
@@ -9,29 +10,43 @@ def index():
 
 @app.route("/add_game", methods=["get", "post"])
 def add_game():
-    if request.method == "GET":
-        return render_template("add_game.html")
-    
     if request.method == "POST":
-        request.form["title"]
+        title = request.form["title"]
+        games.add_game(title)
     
         return redirect("/")
+    
+    return render_template("add_game.html")
+
+@app.route("/game/<int:id>/submit_run", methods=["get", "post"])
+def submit_run(id):
+    if request.method == "POST":
+        time = request.form["time"]
+        user = request.form["username"]
+        runs.add_run(id, time)
+
+        return redirect(url_for("game", id=id))
+    
+    return render_template("submit_run.html", game=games.get_game(id))
 
 @app.route("/game/<int:id>")
 def game(id):
-    return render_template("game.html", game=games.get_game(id))
+    all=runs.get_runs_for(id)
+
+    print(len(all))
+
+    return render_template("game.html", game=games.get_game(id), runs=all)
 
 @app.route("/login", methods=["get", "post"])
-def login():
-    if request.method == "GET":
-        return render_template("login.html")
-    
+def login():        
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
         session["username"] = username
 
         return redirect("/")
+    
+    return render_template("login.html")
 
 @app.route("/logout")
 def logout():

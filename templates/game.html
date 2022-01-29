@@ -1,4 +1,9 @@
 <p>{{ game.title }}</p>
 
-<a href="/submit_run">Submit run</a><br>
+{% for run in runs %}
+{{ run.time }}
+<hr>
+{% endfor %}
+
+<a href="/game/{{ game.id }}/submit_run">Submit run</a><br>
 <a href="/">Back</a>

@@ -1,0 +1,8 @@
+<p>Submit run for {{ game.title }}</p>
+
+<form action="/game/{{ game.id }}/submit_run" method="POST">
+    Time:
+    <input type="text" name="time">
+    <input type="submit" value="Add">
+    <input type="hidden" name="username" value="{{ session.username }}">
+</form>
