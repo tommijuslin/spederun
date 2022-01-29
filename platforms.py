@@ -7,3 +7,7 @@ def add_platform(name):
     id = db.session.execute(sql, {"name":name}).fetchone()[0]
     db.session.commit()
     return id
+
+def get_all_platforms():
+    sql = "SELECT id, name FROM platforms"
+    return db.session.execute(sql).fetchall()

@@ -3,6 +3,7 @@ from flask import render_template, request, redirect, session, url_for
 from werkzeug.security import check_password_hash, generate_password_hash
 import games
 import runs
+import platforms
 
 @app.route("/")
 def index():
@@ -23,19 +24,18 @@ def submit_run(id):
     if request.method == "POST":
         time = request.form["time"]
         user = request.form["username"]
-        runs.add_run(id, time)
+        platform_id = request.form["selected_platform"]
+        runs.add_run(id, time, platform_id)
 
         return redirect(url_for("game", id=id))
     
-    return render_template("submit_run.html", game=games.get_game(id))
+    return render_template("submit_run.html", game=games.get_game(id),
+                                              platforms=platforms.get_all_platforms())
 
 @app.route("/game/<int:id>")
 def game(id):
-    all=runs.get_runs_for(id)
-
-    print(len(all))
-
-    return render_template("game.html", game=games.get_game(id), runs=all)
+    return render_template("game.html", game=games.get_game(id),
+                                        runs=runs.get_runs_for(id))
 
 @app.route("/login", methods=["get", "post"])
 def login():        

@@ -1,9 +1,19 @@
 <p>{{ game.title }}</p>
 
-{% for run in runs %}
-{{ run.time }}
-<hr>
-{% endfor %}
+<table>
+    <tr>
+        <th>Time</th>
+        <th>Platform</th>
+    </tr>
+    {% for run in runs %}
+    <tr>
+        <td>{{ run.time }}</td>
+        <td>{{ run.name }}</td>
+    </tr>
+    {% endfor %}
+    </tr>
+</table>
+
 
 <a href="/game/{{ game.id }}/submit_run">Submit run</a><br>
 <a href="/">Back</a>
