@@ -5,7 +5,7 @@ def add_run(game_id, time, platform_id):
     db.session.execute(sql, {"time":time, "game_id":game_id, "platform_id":platform_id})
     db.session.commit()
 
-def get_runs_for(game_id):
+def get_runs(game_id):
     sql = """SELECT
                 time, platforms.name
              FROM

@@ -29,7 +29,7 @@ def submit_run(id):
         runs.add_run(id, time, platform_id)
 
         if not games_platforms.get_platform(platform_id):
-            games_platforms.add_platform_for_game(id, platform_id)
+            games_platforms.add_platform(id, platform_id)
 
         return redirect(url_for("game", id=id))
     
@@ -39,8 +39,8 @@ def submit_run(id):
 @app.route("/game/<int:id>")
 def game(id):
     return render_template("game.html", game=games.get_game(id),
-                                        runs=runs.get_runs_for(id),
-                                        platforms=games_platforms.get_platforms_for_game(id))
+                                        runs=runs.get_runs(id),
+                                        platforms=games_platforms.get_all_platforms(id))
 
 @app.route("/login", methods=["get", "post"])
 def login():        
