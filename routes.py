@@ -4,6 +4,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 import games
 import runs
 import platforms
+import games_platforms
 
 @app.route("/")
 def index():
@@ -27,6 +28,9 @@ def submit_run(id):
         platform_id = request.form["selected_platform"]
         runs.add_run(id, time, platform_id)
 
+        if not games_platforms.get_platform(platform_id):
+            games_platforms.add_platform_for_game(id, platform_id)
+
         return redirect(url_for("game", id=id))
     
     return render_template("submit_run.html", game=games.get_game(id),
@@ -35,7 +39,8 @@ def submit_run(id):
 @app.route("/game/<int:id>")
 def game(id):
     return render_template("game.html", game=games.get_game(id),
-                                        runs=runs.get_runs_for(id))
+                                        runs=runs.get_runs_for(id),
+                                        platforms=games_platforms.get_platforms_for_game(id))
 
 @app.route("/login", methods=["get", "post"])
 def login():        

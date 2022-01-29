@@ -17,9 +17,9 @@ CREATE TABLE platforms (
 );
 
 CREATE TABLE games_platforms (
-    id SERIAL PRIMARY KEY,
     game_id INTEGER REFERENCES games,
-    platform_id INTEGER REFERENCES platforms
+    platform_id INTEGER REFERENCES platforms,
+    PRIMARY KEY (game_id, platform_id)
 );
 
 CREATE TABLE categories (

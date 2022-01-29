@@ -1,5 +1,9 @@
 <p>{{ game.title }}</p>
 
+{% for platform in platforms %}
+{{ platform.name }}
+{% endfor %}
+
 <table>
     <tr>
         <th>Time</th>

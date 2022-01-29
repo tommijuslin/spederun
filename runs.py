@@ -6,5 +6,10 @@ def add_run(game_id, time, platform_id):
     db.session.commit()
 
 def get_runs_for(game_id):
-    sql = "SELECT time, platforms.name FROM runs LEFT JOIN platforms ON runs.platform_id = platforms.id WHERE game_id=:game_id ORDER BY time"
+    sql = """SELECT
+                time, platforms.name
+             FROM
+                runs LEFT JOIN platforms ON runs.platform_id = platforms.id
+             WHERE
+                game_id=:game_id ORDER BY time"""
     return db.session.execute(sql, {"game_id":game_id}).fetchall()
