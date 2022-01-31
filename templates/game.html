@@ -1,3 +1,6 @@
+{% extends "layout.html" %}
+{% block content %}
+
 <p>{{ game.title }}</p>
 
 {% for platform in platforms %}
@@ -12,8 +15,8 @@
     </tr>
     {% for run in runs %}
     <tr>
-        <td>{{ run.user }}</td>
-        <td>{{ run.time }}</td>
+        <td class="runner">{{ run.user }}</td>
+        <td>{{ format_time(run.time) }}</td>
         <td>{{ run.platform }}</td>
     </tr>
     {% endfor %}
@@ -23,3 +26,5 @@
 
 <a href="/game/{{ game.id }}/submit_run">Submit run</a><br>
 <a href="/">Back</a>
+
+{% endblock %}

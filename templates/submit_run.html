@@ -1,13 +1,22 @@
+{% extends "layout.html" %}
+{% block content %}
+
 <p>Submit run for {{ game.title }}</p>
 
 <form action="/game/{{ game.id }}/submit_run" method="POST">
-    Time:
-    <input type="text" name="time">
+    <p>Time:<br>
+    <input type="number" name="hours" placeholder="h" class="input-time"></input>
+    <input type="number" name="minutes" placeholder="m" class="input-time"></input>
+    <input type="number" name="seconds" placeholder="s" class="input-time"></input>
+    <input type="number" name="ms" placeholder="ms" class="input-time"></input></p>
+    <p>Platform:<br>
     <select name="selected_platform">
         {% for platform in platforms %}
         <option value={{ platform.id }}>{{ platform.name }}</option>
         {% endfor %}
-    </select>
+    </select></p>
     <input type="submit" value="Add">
     <input type="hidden" name="user_id" value="{{ session.user_id }}">
 </form>
+
+{% endblock %}

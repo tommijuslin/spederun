@@ -23,7 +23,12 @@ def add_game():
 @app.route("/game/<int:id>/submit_run", methods=["get", "post"])
 def submit_run(id):
     if request.method == "POST":
-        time = request.form["time"]
+        hours = int(request.form["hours"])
+        minutes = int(request.form["minutes"])
+        seconds = int(request.form["seconds"])
+        ms = int(request.form["ms"])
+        time = convert_to_ms(hours, minutes, seconds, ms)
+
         user_id = request.form["user_id"]
         platform_id = request.form["selected_platform"]
         runs.add_run(id, time, platform_id, user_id)
@@ -40,7 +45,8 @@ def submit_run(id):
 def game(id):
     return render_template("game.html", game=games.get_game(id),
                                         runs=runs.get_runs(id),
-                                        platforms=games_platforms.get_all_platforms(id))
+                                        platforms=games_platforms.get_all_platforms(id),
+                                        format_time=format_time)
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -75,3 +81,21 @@ def logout():
     del session["user_id"]
     del session["username"]
     return redirect("/")
+
+def convert_to_ms(hours, minutes, seconds, ms):
+    s = 1000 * seconds
+    m = 60000 * minutes
+    h = 3600000 * hours
+
+    return h + m + s + ms
+
+def format_time(ms):
+    second_ms = divmod(ms, 1000)
+    min_second = divmod(second_ms[0], 60)
+    hour_min = divmod(min_second[0], 60)
+
+    s = int(min_second[1])
+    m = int(hour_min[1])
+    h = int(hour_min[0])
+
+    return f"{h}h {m}m {s}s"

@@ -1,3 +1,6 @@
+{% extends "layout.html" %}
+{% block content %}
+
 {% if session.user_id %}
 <p>You are logged in as {{ session.username }}</p>
 <a href="/logout">Logout</a>
@@ -13,3 +16,5 @@
 <a href="/game/{{ game.id }}">{{ game.title }}</a>
 <br>
 {% endfor %}
+
+{% endblock %}

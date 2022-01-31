@@ -1,5 +1,10 @@
+{% extends "layout.html" %}
+{% block content %}
+
 <form action="/add_game" method="POST">
     Add game:
     <input type="text" name="title">
     <input type="submit" value="Add">
 </form>
+
+{% endblock %}
