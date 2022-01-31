@@ -24,9 +24,9 @@ def add_game():
 def submit_run(id):
     if request.method == "POST":
         time = request.form["time"]
-        user = request.form["username"]
+        user_id = request.form["user_id"]
         platform_id = request.form["selected_platform"]
-        runs.add_run(id, time, platform_id)
+        runs.add_run(id, time, platform_id, user_id)
 
         if not games_platforms.get_platform(platform_id):
             games_platforms.add_platform(id, platform_id)

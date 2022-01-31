@@ -6,13 +6,15 @@
 
 <table>
     <tr>
+        <th>Runner</th>
         <th>Time</th>
         <th>Platform</th>
     </tr>
     {% for run in runs %}
     <tr>
+        <td>{{ run.user }}</td>
         <td>{{ run.time }}</td>
-        <td>{{ run.name }}</td>
+        <td>{{ run.platform }}</td>
     </tr>
     {% endfor %}
     </tr>
