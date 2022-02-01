@@ -12,12 +12,14 @@
         <th>Runner</th>
         <th>Time</th>
         <th>Platform</th>
+        <th>Date</th></tgh>
     </tr>
     {% for run in runs %}
     <tr>
         <td class="runner">{{ run.user }}</td>
         <td>{{ format_time(run.time) }}</td>
         <td>{{ run.platform }}</td>
+        <td>{{ run.date }}</td>
     </tr>
     {% endfor %}
     </tr>

@@ -27,6 +27,7 @@ def submit_run(id):
         minutes = int(request.form["minutes"])
         seconds = int(request.form["seconds"])
         ms = int(request.form["ms"])
+
         time = convert_to_ms(hours, minutes, seconds, ms)
 
         user_id = request.form["user_id"]
@@ -75,7 +76,6 @@ def register():
     
     return render_template("register.html")
     
-
 @app.route("/logout")
 def logout():
     del session["user_id"]
