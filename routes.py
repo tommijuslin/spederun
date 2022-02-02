@@ -14,6 +14,9 @@ def index():
 def add_game():
     if request.method == "POST":
         title = request.form["title"]
+        if len(title) > 100 or len(title) < 1:
+            return render_template("error.html", message="Game title must be 1-100 characters long.") 
+
         games.add_game(title)
     
         return redirect("/")
