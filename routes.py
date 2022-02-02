@@ -65,6 +65,9 @@ def login():
 def register():
     if request.method == "POST":
         username = request.form["username"]
+        if len(username) < 1 or len(username) > 20:
+            return render_template("error.html", message="Username must be 1-20 characters long.")
+
         password1 = request.form["password1"]
         password2 = request.form["password2"]
         if password1 != password2:
