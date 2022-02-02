@@ -47,10 +47,14 @@ def submit_run(id):
 
 @app.route("/game/<int:id>")
 def game(id):
-    return render_template("game.html", game=games.get_game(id),
-                                        runs=runs.get_runs(id),
-                                        platforms=games_platforms.get_all_platforms(id),
-                                        format_time=format_time)
+    game = games.get_game(id)
+    if game:
+        return render_template("game.html", game=game,
+                                            runs=runs.get_runs(id),
+                                            platforms=games_platforms.get_all_platforms(id),
+                                            format_time=format_time)
+    
+    return render_template("error.html", message=f"No game with id { id } could be found.")
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -70,6 +74,8 @@ def register():
         username = request.form["username"]
         if len(username) < 1 or len(username) > 20:
             return render_template("error.html", message="Username must be 1-20 characters long.")
+        if users.get_username(username):
+            return render_template("error.html", message="User with that name already exists.")
 
         password1 = request.form["password1"]
         password2 = request.form["password2"]

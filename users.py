@@ -25,3 +25,7 @@ def register(username, password):
     except:
         return False
     return login(username, password)
+
+def get_username(username):
+    sql = "SELECT username FROM users WHERE username=:username"
+    return db.session.execute(sql, {"username":username}).fetchone()
