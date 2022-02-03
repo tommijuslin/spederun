@@ -9,6 +9,7 @@ Tämänhetkiset ominaisuudet:
 
 Huomioita:
 - speedrunien lisääminen onnistuu vain kirjautuneilta käyttäjiltä, vaikka ohjelma ei tällä hetkellä estä yrittämästä ilman kirjautumista
+- ohjelman ulkoasuun ei ole vielä tässä vaiheessa kiinnitetty huomiota juuri ollenkaan
 
 ## Mikä ihmeen spederun?
 
