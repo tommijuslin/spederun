@@ -1,7 +1,5 @@
 # spederun
 
-## Mistä spederun löytyy?
-
 https://tsoha-spederun.herokuapp.com/
 
 Huomioita:
