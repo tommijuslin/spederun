@@ -2,6 +2,11 @@
 
 https://tsoha-spederun.herokuapp.com/
 
+Tämänhetkiset ominaisuudet:
+- kirjautuminen ja rekisteröityminen
+- pelin lisääminen
+- speedrun-ajan lisääminen pelille
+
 Huomioita:
 - speedrunien lisääminen onnistuu vain kirjautuneilta käyttäjiltä, vaikka ohjelma ei tällä hetkellä estä yrittämästä ilman kirjautumista
 
