@@ -1,6 +1,13 @@
 # spederun
 
+## Mistä spederun löytyy?
+
 https://tsoha-spederun.herokuapp.com/
+
+Huomioita:
+- speedrunien lisääminen onnistuu vain kirjautuneilta käyttäjiltä, vaikka ohjelma ei tällä hetkellä estä yrittämästä ilman kirjautumista
+
+## Mikä ihmeen spederun?
 
 Spederun on sovellus, joka pitää kirjaa videopelien [speedrun](https://en.wikipedia.org/wiki/Speedrun)-ennätyksistä. Speedruneissa on tarkoitus pelata peli tai sen osa läpi mahdollisimman nopeasti.
 
