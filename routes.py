@@ -6,6 +6,8 @@ import runs
 import platforms
 import games_platforms
 
+NEGATIVE = -1
+
 @app.route("/")
 def index():
     return render_template("index.html", games=games.get_all_games())
@@ -18,7 +20,7 @@ def add_game():
             return render_template("error.html", message="Game title must be 1-100 characters long.")
 
         games.add_game(title)
-    
+
         return redirect("/")
     
     return render_template("add_game.html")
@@ -26,16 +28,24 @@ def add_game():
 @app.route("/game/<int:id>/submit_run", methods=["get", "post"])
 def submit_run(id):
     if request.method == "POST":
-        hours = int(request.form["hours"])
-        minutes = int(request.form["minutes"])
-        seconds = int(request.form["seconds"])
-        ms = int(request.form["ms"])
+        time = {
+            "hours": validate_time(request.form["hours"]),
+            "minutes": validate_time(request.form["minutes"]),
+            "seconds": validate_time(request.form["seconds"]),
+            "ms": validate_time(request.form["ms"])
+        }
+        
+        if NEGATIVE in time:
+            return render_template("error.html", message="Time must be positive.")
+        
+        if all(value == 0 for value in time.values()):
+            return render_template("error.html", message="Time must be non-zero.")
 
-        time = convert_to_ms(hours, minutes, seconds, ms)
+        formatted_time = convert_to_ms(time["hours"], time["minutes"], time["seconds"], time["ms"])
 
         user_id = request.form["user_id"]
         platform_id = request.form["selected_platform"]
-        runs.add_run(id, time, platform_id, user_id)
+        runs.add_run(id, formatted_time, platform_id, user_id)
 
         if not games_platforms.get_platform(platform_id):
             games_platforms.add_platform(id, platform_id)
@@ -111,3 +121,11 @@ def format_time(ms):
     h = int(hour_min[0])
 
     return f"{h}h {m}m {s}s"
+
+def validate_time(time):
+    if time == "":
+        return 0
+    elif int(time) < 0:
+        return NEGATIVE
+
+    return int(time)

@@ -5,10 +5,10 @@
 
 <form action="/game/{{ game.id }}/submit_run" method="POST">
     <p>Time:<br>
-    <input type="number" name="hours" placeholder="h" class="input-time"></input>
-    <input type="number" name="minutes" placeholder="m" class="input-time"></input>
-    <input type="number" name="seconds" placeholder="s" class="input-time"></input>
-    <input type="number" name="ms" placeholder="ms" class="input-time"></input></p>
+    <input type="number" min="0" name="hours" placeholder="h" class="input-time" oninput="validity.valid||(value='');"></input>
+    <input type="number" min="0" name="minutes" placeholder="m" class="input-time" oninput="validity.valid||(value='');"></input>
+    <input type="number" min="0" name="seconds" placeholder="s" class="input-time" oninput="validity.valid||(value='');"></input>
+    <input type="number" min="0" name="ms" placeholder="ms" class="input-time" oninput="validity.valid||(value='');"></input></p>
     <p>Platform:<br>
     <select name="selected_platform">
         {% for platform in platforms %}
