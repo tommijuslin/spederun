@@ -1,10 +1,23 @@
 {% extends "layout.html" %}
 {% block content %}
 
-<form action="/add_game" method="POST">
-    Add game:
-    <input type="text" name="title">
-    <input type="submit" value="Add">
-</form>
+<div class="box">
+    <div>
+        <ul class="box-top">
+            <div>
+                <li class="box-title">Add game</li>
+            </div>
+        </ul>
+    </div>
+    <div class="box-content">
+        <form action="/add_game" method="POST">
+            <p>Title:<br>
+            <input type="text" name="title"></p>
+            <input type="submit" value="Add" class="button">
+        </form>
+    </div>
+</div>
+
+<a href="/" style="padding: 10px">Back</a>
 
 {% endblock %}

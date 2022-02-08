@@ -121,3 +121,7 @@ h2 {
     text-align: center;
     color: white;
 }
+
+input {
+    padding: 3px 5px;
+}
