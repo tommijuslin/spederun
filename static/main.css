@@ -22,12 +22,14 @@ body {
 
 .box-top {
     display: flex;
+    flex-direction: row;
     background-color: rgb(54, 90, 124);
 }
 
 .box-button {
     background-color: rgb(70, 116, 160);
     margin-left: auto;
+    text-align: center;
 }
 
 .box-title {

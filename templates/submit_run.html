@@ -3,9 +3,7 @@
 
 <div class="box">
     <ul class="box-top">
-        <div>
-            <li class="box-title">Submit run for {{ game.title }}</li>
-        </div>
+        <li class="box-title">Submit run for {{ game.title }}</li>
     </ul>
     <div class="box-content">
         <form action="/game/{{ game.id }}/submit_run" method="POST">
