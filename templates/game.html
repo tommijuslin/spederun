@@ -15,6 +15,7 @@
     <div class="box-content">
         <table id="games">
             <tr>
+                <th style="width: 10px">Rank</th>
                 <th style="text-align: left">Runner</th>
                 <th>Time</th>
                 <th>Platform</th>
@@ -22,6 +23,7 @@
             </tr>
             {% for run in runs %}
             <tr>
+                <td style="width: 10px">{{ loop.index }}</td>
                 <td style="text-align: left">{{ run.user }}</td>
                 <td>{{ format_time(run.time) }}</td>
                 <td>{{ run.platform }}</td>

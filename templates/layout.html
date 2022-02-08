@@ -2,21 +2,19 @@
 <link rel="stylesheet" href="/static/main.css">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<div>
-    <ul class="navbar">
-        <div>
-            <li><a href="/">Spederun</a></li>
-        </div>
-        <div class="nav-user">
-            {% if session.user_id %}
-            <li><a href=/user/{{ session.user_id}}>{{ session.username }}</a></li>
-            <li><a href="/logout">Logout</a></li>
-            {% else %}
-            <li><a href="/login">Login</a></li>
-            <li><a href="/register">Register</a></li>
-            {% endif %}
-        </div>
-    </ul>
-</div>
+<ul class="navbar">
+    <div>
+        <li><a href="/">Spederun</a></li>
+    </div>
+    <div class="nav-user">
+        {% if session.user_id %}
+        <li><a href=/user/{{ session.user_id}}>{{ session.username }}</a></li>
+        <li><a href="/logout">Logout</a></li>
+        {% else %}
+        <li><a href="/login">Login</a></li>
+        <li><a href="/register">Register</a></li>
+        {% endif %}
+    </div>
+</ul>
 
 {% block content %}{% endblock %}
