@@ -140,6 +140,10 @@ def format_time(ms):
     s = int(min_second[1])
     m = int(hour_min[1])
     h = int(hour_min[0])
+    ms = int(second_ms[1])
+
+    if s == 0 and m == 0 and h == 0:
+        return f"{h}h {m}m {s}s {ms}ms"
 
     return f"{h}h {m}m {s}s"
 
