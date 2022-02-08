@@ -22,6 +22,8 @@ def add_game():
         title = request.form["title"]
         if len(title) > 50 or len(title) < 1:
             return render_template("add_game.html", message="Game title must be 1-50 characters long.")
+        if games.get_game_by_title(title):
+            return render_template("add_game.html", message="Game already exists.")
 
         games.add_game(title)
 
