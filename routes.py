@@ -68,7 +68,17 @@ def game(id):
     
     return render_template("error.html", message=f"No game with id { id } could be found.")
 
-@app.route("/login", methods=["GET", "POST"])
+@app.route("/user/<int:id>")
+def user(id):
+    user=users.get_user(id)
+    if user:
+        return render_template("user.html", user=users.get_user(id),
+                                            runs=runs.get_runs_for_user(id),
+                                            format_time=format_time)
+
+    return render_template("error.html", message=f"No user with id { id } could be found.")
+
+@app.route("/login", methods=["get", "post"])
 def login():
     if request.method == "POST":
         username = request.form["username"]

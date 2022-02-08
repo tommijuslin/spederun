@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="box">
+    <div>
+        <ul class="box-top">
+            <div>
+                <li class="box-title">{{ user.username }}'s runs</li>
+            </div>
+        </ul>
+    </div>
+    <div class="box-content">
+        <table id="games">
+            <tr>
+                <th style="text-align: left">Game</th>
+                <th>Time</th>
+                <th>Platform</th>
+                <th>Date</th></tgh>
+            </tr>
+            {% for run in runs %}
+            <tr>
+                <td style="text-align: left"><a href="/game/{{ run.game_id }}">{{ run.game }}</a></th>
+                <td>{{ format_time(run.time) }}</td>
+                <td>{{ run.platform }}</td>
+                <td>{{ run.date }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+
+<a href="/" style="padding: 10px">Back</a>
+
+{% endblock %}

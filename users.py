@@ -29,3 +29,7 @@ def register(username, password):
 def get_username(username):
     sql = "SELECT username FROM users WHERE username=:username"
     return db.session.execute(sql, {"username":username}).fetchone()
+
+def get_user(id):
+    sql = "SELECT id, username FROM users WHERE id=:id"
+    return db.session.execute(sql, {"id":id}).fetchone()
