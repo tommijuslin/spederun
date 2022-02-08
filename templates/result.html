@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="box">
+    <ul class="box-top">
+        <li class="box-title">Search results</li>
+    </ul>
+    <div class="box-content">
+        {% for game in games %}
+        <p><a href="/game/{{ game.id }}">{{ game.title }}</a></p>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

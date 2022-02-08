@@ -14,3 +14,7 @@ def get_all_games():
 def get_game(game_id):
     sql = "SELECT id, title FROM games WHERE id=:game_id"
     return db.session.execute(sql, {"game_id":game_id}).fetchone()
+
+def search_games(query):
+    sql = "SELECT id, title FROM games WHERE UPPER(title) LIKE UPPER(:query)"
+    return db.session.execute(sql, {"query":"%"+query+"%"}).fetchall()

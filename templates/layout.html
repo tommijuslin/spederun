@@ -6,7 +6,11 @@
     <div>
         <li><a href="/">Spederun</a></li>
     </div>
-    <div class="nav-user">
+    <div class="nav-right">
+        <form action="/result" method="get" class="search-form">
+            <input type="text" name="query" style="width: 10em">
+            <input type="submit" value="Search" class="search-button">
+        </form>
         {% if session.user_id %}
         <li><a href=/user/{{ session.user_id}}>{{ session.username }}</a></li>
         <li><a href="/logout">Logout</a></li>
