@@ -1,20 +1,53 @@
 {% extends "layout.html" %}
 {% block content %}
 
-{% if session.user_id %}
-<p>You are logged in as {{ session.username }}</p>
-<a href="/logout">Logout</a>
+<div class="box">
+    <div>
+        <ul class="box-top">
+            <div>
+                <li class="box-title">Newest runs</li>
+            </div>
+        </ul>
+        <div class="box-content">
+            <table id="games">
+                <tr>
+                    <th style="text-align: left">Game</th>
+                    <th>Runner</th>
+                    <th>Time</th>
+                    <th>Platform</th>
+                    <th>Date</th></tgh>
+                </tr>
+                {% for run in runs %}
+                <tr>
+                    <td style="text-align: left"><a href="/game/{{ run.game_id }}">{{ run.game }}</a></th>
+                    <td>{{ run.user }}</td>
+                    <td>{{ format_time(run.time) }}</td>
+                    <td>{{ run.platform }}</td>
+                    <td>{{ run.date }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
 
-{% else %}
-<a href="/login">Login</a>
-<a href="/register">Register</a>
-{% endif %}
-
-<p><a href="/add_game">Add game</a></p>
-
-{% for game in games %}
-<a href="/game/{{ game.id }}">{{ game.title }}</a>
-<br>
-{% endfor %}
+<div class="box">
+    <div>
+        <ul class="box-top">
+            <div>
+                <li class="box-title">Games</li>
+            </div>
+            <div class="box-button">
+                <li><a href="/add_game">+ Add game</a></li>
+            </div>
+        </ul>
+    </div>
+    <div class="box-content">
+        {% for game in games %}
+        <a href="/game/{{ game.id }}">{{ game.title }}</a>
+        <br>
+        {% endfor %}
+    </div>
+</div>
 
 {% endblock %}

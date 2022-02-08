@@ -16,3 +16,19 @@ def get_runs(game_id):
              WHERE
                 game_id=:game_id ORDER BY time"""
     return db.session.execute(sql, {"game_id":game_id}).fetchall()
+
+def get_newest_runs():
+    sql = """SELECT
+             users.username AS user,
+             time, platforms.name AS platform,
+             games.title AS game,
+             game_id, date::timestamp::date
+             FROM runs
+             LEFT JOIN platforms
+             ON runs.platform_id = platforms.id
+             LEFT JOIN users
+             ON runs.user_id = users.id
+             LEFT JOIN games
+             ON runs.game_id = games.id
+             ORDER BY runs.date DESC LIMIT 5"""
+    return db.session.execute(sql).fetchall()

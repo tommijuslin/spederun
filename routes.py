@@ -10,7 +10,9 @@ NEGATIVE = -1
 
 @app.route("/")
 def index():
-    return render_template("index.html", games=games.get_all_games())
+    return render_template("index.html", games=games.get_all_games(),
+                                         runs=runs.get_newest_runs(),
+                                         format_time=format_time)
 
 @app.route("/add_game", methods=["get", "post"])
 def add_game():
