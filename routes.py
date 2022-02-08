@@ -13,14 +13,15 @@ NEGATIVE = -1
 def index():
     return render_template("index.html", games=games.get_all_games(),
                                          runs=runs.get_newest_runs(),
-                                         format_time=format_time)
+                                         format_time=format_time,
+                                         format_title=format_title)
 
 @app.route("/add_game", methods=["get", "post"])
 def add_game():
     if request.method == "POST":
         title = request.form["title"]
-        if len(title) > 100 or len(title) < 1:
-            return render_template("add_game.html", message="Game title must be 1-100 characters long.")
+        if len(title) > 50 or len(title) < 1:
+            return render_template("add_game.html", message="Game title must be 1-50 characters long.")
 
         games.add_game(title)
 
@@ -164,3 +165,9 @@ def validate_time(time):
         return NEGATIVE
 
     return int(time)
+
+def format_title(title):
+    if len(title) < 35:
+        return title
+
+    return title[:35] + "..."

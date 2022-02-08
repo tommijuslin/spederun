@@ -16,7 +16,7 @@
             </tr>
             {% for run in runs %}
             <tr>
-                <td style="text-align: left"><a href="/game/{{ run.game_id }}">{{ run.game }}</a></th>
+                <td style="text-align: left"><a href="/game/{{ run.game_id }}">{{ format_title(run.game) }}</a></th>
                 <td><a href="/user/{{ run.user_id }}">{{ run.user }}</a></td>
                 <td>{{ format_time(run.time) }}</td>
                 <td>{{ run.platform }}</td>
