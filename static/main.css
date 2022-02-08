@@ -1,4 +1,5 @@
 body {
+    font-family: Arial, Helvetica, sans-serif;
     width: 900px;
     margin: 0 auto;
     background: rgb(27, 36, 49);
@@ -15,6 +16,7 @@ body {
 
 .box-content {
     padding: 10px;
+    justify-content: center;
 }
 
 .box-top {
@@ -28,7 +30,6 @@ body {
 }
 
 .box-title {
-    font-family: Arial, Helvetica, sans-serif;
     color: white;
     text-transform: uppercase;
     display: block;
@@ -68,7 +69,6 @@ li.thick {
 }
 
 a {
-    font-family: Arial, Helvetica, sans-serif;
     color: rgb(230, 230, 230);
     text-decoration: none;
 }
@@ -77,8 +77,11 @@ a:hover {
     color: white;
 }
 
+p {
+    color: white;
+}
+
 h2 {
-    font-family: Arial, Helvetica, sans-serif;
     color: white;
     text-transform: uppercase;
     margin: 0;
@@ -88,20 +91,17 @@ h2 {
 }
 
 .button {
-    display: block;
-    width: 115px;
-    height: 100%;
-    background: rgb(61, 105, 143);
-    padding: 5px;
-    text-align: center;
-    border-radius: 1px;
+    font-size: 1em;
+    padding:3px;
+    width: 70px;
+    background-color: rgb(70, 116, 160);
+    border: 1px solid #0184BC;
+    text-decoration:none;
     color: white;
-    font-weight: bold;
-    line-height: auto;
+    text-align: center;
 }
 
 #games {
-    font-family: Arial, Helvetica, sans-serif;
     border-collapse: collapse;
     width: 100%;
 }

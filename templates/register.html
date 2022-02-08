@@ -1,14 +1,23 @@
 {% extends "layout.html" %}
 {% block content %}
 
-<form action="/register" method="POST">
-    <p>Username:<br>
-    <input type="text" name="username"></p>
-    <p>Password:<br>
-    <input type="password" name="password1"></p>
-    <p>Enter password again:<br>
-    <input type="password" name="password2"></p>
-    <input type="submit" value="Register">
-</form>
+<div class="box">
+    <ul class="box-top">
+        <div>
+            <li class="box-title">Register</li>
+        </div>
+    </ul>
+    <div class="box-content">
+        <form action="/register" method="POST">
+            <p>Username:<br>
+            <input type="text" name="username"></p>
+            <p>Password:<br>
+            <input type="password" name="password1"></p>
+            <p>Enter password again:<br>
+            <input type="password" name="password2"></p>
+            <input type="submit" value="Register" class="button">
+        </form>
+    </div>
+</div>
 
 {% endblock %}

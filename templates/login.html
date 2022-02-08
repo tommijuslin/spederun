@@ -2,20 +2,18 @@
 {% block content %}
 
 <div class="box">
-    <div>
-        <ul class="box-top">
-            <div>
-                <li class="box-title">Login</li>
-            </div>
-        </ul>
-    </div>
+    <ul class="box-top">
+        <div>
+            <li class="box-title">Login</li>
+        </div>
+    </ul>
     <div class="box-content">
         <form action="/login" method="POST">
             <p>Username:<br>
             <input type="text" name="username"></p>
             <p>Password:<br>
             <input type="password" name="password"></p>
-            <input type="submit" value="Login">
+            <input type="submit" value="Login" class="button">
         </form>
     </div>
 </div>

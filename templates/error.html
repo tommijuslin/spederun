@@ -1,6 +1,17 @@
 {% extends "layout.html" %}
 {% block content %}
 
-{{ message }}
+<div class="box">
+    <ul class="box-top">
+        <div>
+            <li class="box-title">Error</li>
+        </div>
+    </ul>
+    <div class="box-content">
+        <p>{{ message }}</p>
+    </div>
+</div>
+
+<a href="/" style="padding: 10px">Back</a>
 
 {% endblock %}
