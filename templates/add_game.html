@@ -5,6 +5,11 @@
     <ul class="box-top">
         <li class="box-title">Add game</li>
     </ul>
+    <div id="error">
+        {% if message %}
+            {% include "error.html" %}
+        {% endif %}
+    </div>
     <div class="box-content">
         <form action="/add_game" method="POST">
             <p>Title:<br>

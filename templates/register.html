@@ -5,6 +5,11 @@
     <ul class="box-top">
         <li class="box-title">Register</li>
     </ul>
+    <div id="error">
+        {% if message %}
+            {% include "error.html" %}
+        {% endif %}
+    </div>
     <div class="box-content">
         <form action="/register" method="POST">
             <p>Username (1-20 characters):<br>

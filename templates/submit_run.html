@@ -5,6 +5,11 @@
     <ul class="box-top">
         <li class="box-title">Submit run for {{ game.title }}</li>
     </ul>
+    <div id="error">
+        {% if message %}
+            {% include "error.html" %}
+        {% endif %}
+    </div>
     <div class="box-content">
         <form action="/game/{{ game.id }}/submit_run" method="POST">
             <p>Time:<br>

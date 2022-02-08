@@ -1,7 +1,7 @@
 body {
     font-family: Verdana, Helvetica, sans-serif;
     font-size: 90%;
-    width: 50%;
+    width: 1000px;
     margin: 0 auto;
     background: rgb(27, 36, 49);
     display: flex;
@@ -96,6 +96,7 @@ h2 {
 }
 
 .button {
+    margin-top: 10px;
     font-size: 1em;
     padding:3px;
     width: 70px;
@@ -130,4 +131,13 @@ h2 {
 input {
     padding: 3px 5px;
     width: 20em;
+}
+
+.input-time {
+    width: 7em;
+}
+
+#error p {
+    padding: 10px 0px 0px 10px;
+    color: rgb(255, 109, 109);
 }

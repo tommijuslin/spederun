@@ -1,3 +1,4 @@
+from distutils.log import error
 from app import app
 from flask import render_template, request, redirect, session, url_for
 import users
@@ -19,7 +20,7 @@ def add_game():
     if request.method == "POST":
         title = request.form["title"]
         if len(title) > 100 or len(title) < 1:
-            return render_template("error.html", message="Game title must be 1-100 characters long.")
+            return render_template("add_game.html", message="Game title must be 1-100 characters long.")
 
         games.add_game(title)
 
@@ -38,10 +39,14 @@ def submit_run(id):
         }
         
         if NEGATIVE in time:
-            return render_template("error.html", message="Time must be positive.")
+            return render_template("submit_run.html", message="Time must be positive.",
+                                                      game=games.get_game(id),
+                                                      platforms=platforms.get_all_platforms())
         
         if all(value == 0 for value in time.values()):
-            return render_template("error.html", message="Time must be non-zero.")
+            return render_template("submit_run.html", message="Time must be non-zero.",
+                                                      game=games.get_game(id),
+                                                      platforms=platforms.get_all_platforms())
 
         converted_time = convert_to_ms(time["hours"], time["minutes"], time["seconds"], time["ms"])
         user_id = request.form["user_id"]
@@ -88,7 +93,7 @@ def login():
         if users.login(username, password):
             return redirect("/")
         else:
-            return render_template("error.html", message="Wrong username or password")
+            return render_template("login.html", message="Wrong username or password")
     
     return render_template("login.html")
 
@@ -97,20 +102,20 @@ def register():
     if request.method == "POST":
         username = request.form["username"]
         if len(username) < 1 or len(username) > 20:
-            return render_template("error.html", message="Username must be 1-20 characters long.")
+            return render_template("register.html", message="Username must be 1-20 characters long.")
         if users.get_username(username):
-            return render_template("error.html", message="User with that name already exists.")
+            return render_template("register.html", message="User with that name already exists.")
 
         password1 = request.form["password1"]
         if len(password1) < 8:
-            return render_template("error.html", message="Password must be at least 8 characters long.")
+            return render_template("register.html", message="Password must be at least 8 characters long.")
         password2 = request.form["password2"]
         if password1 != password2:
-            return render_template("error.html", message="Passwords don't match")
+            return render_template("register.html", message="Passwords don't match")
         if users.register(username, password1):
             return redirect("/")
         else:
-            return render_template("error.html", message="Registration failed")
+            return render_template("register.html", message="Registration failed")
     
     return render_template("register.html")
     
