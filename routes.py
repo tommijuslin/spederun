@@ -80,6 +80,9 @@ def result():
     query = request.args["query"]
     games_list = games.search_games(query)
 
+    if not games_list:
+        return render_template("result.html", message="No games found.")
+
     return render_template("result.html", games=games_list)
 
 @app.route("/user/<int:id>")
