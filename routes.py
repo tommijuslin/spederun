@@ -102,6 +102,8 @@ def register():
             return render_template("error.html", message="User with that name already exists.")
 
         password1 = request.form["password1"]
+        if len(password1) < 8:
+            return render_template("error.html", message="Password must be at least 8 characters long.")
         password2 = request.form["password2"]
         if password1 != password2:
             return render_template("error.html", message="Passwords don't match")
