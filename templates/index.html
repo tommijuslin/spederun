@@ -44,8 +44,7 @@
     </div>
     <div class="box-content">
         {% for game in games %}
-        <a href="/game/{{ game.id }}">{{ game.title }}</a>
-        <br>
+        <p><a href="/game/{{ game.id }}">{{ game.title }}</a></p>
         {% endfor %}
     </div>
 </div>
