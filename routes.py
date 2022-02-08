@@ -43,16 +43,18 @@ def submit_run(id):
         if all(value == 0 for value in time.values()):
             return render_template("error.html", message="Time must be non-zero.")
 
-        formatted_time = convert_to_ms(time["hours"], time["minutes"], time["seconds"], time["ms"])
-
+        converted_time = convert_to_ms(time["hours"], time["minutes"], time["seconds"], time["ms"])
         user_id = request.form["user_id"]
         platform_id = request.form["selected_platform"]
-        runs.add_run(id, formatted_time, platform_id, user_id)
+        runs.add_run(id, converted_time, platform_id, user_id)
 
         if not games_platforms.get_platform(platform_id):
             games_platforms.add_platform(id, platform_id)
 
         return redirect(url_for("game", id=id))
+    
+    if not games.get_game(id):
+        return render_template("error.html", message=f"No game with id { id } could be found.")
     
     return render_template("submit_run.html", game=games.get_game(id),
                                               platforms=platforms.get_all_platforms())
