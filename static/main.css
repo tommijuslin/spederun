@@ -104,13 +104,28 @@ h2 {
     margin-top: 10px;
     margin-bottom: 4px;
     font-size: 1em;
-    padding:3px;
+    padding: 3px;
     width: 70px;
     background-color: rgb(70, 116, 160);
     border: 1px solid #0184BC;
     text-decoration:none;
     color: white;
     text-align: center;
+}
+
+.delete-button {
+    font-size: 1em;
+    padding: 0;
+    width: 20px;
+    background-color:rgb(38, 71, 100);
+    border: 1px solid #5881a3;
+    text-decoration:none;
+    color: white;
+    text-align: center;
+}
+
+.delete-button:hover {
+    color: rgb(255, 109, 109);
 }
 
 .search-form {

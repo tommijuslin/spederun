@@ -73,6 +73,14 @@ def submit_run(id):
     return render_template("submit_run.html", game=games.get_game(id),
                                               platforms=platforms.get_all_platforms())
 
+@app.route("/delete_run/<int:id>", methods=["post"])
+def delete_run(id):
+    users.check_csrf()
+
+    runs.delete_run(id)
+
+    return redirect("/")
+
 @app.route("/game/<int:id>")
 def game(id):
     game = games.get_game(id)
@@ -96,11 +104,15 @@ def result():
 
 @app.route("/user/<int:id>")
 def user(id):
+    allow = False
     user=users.get_user(id)
+    if session["user_id"] == id:
+        allow = True
     if user:
         return render_template("user.html", user=users.get_user(id),
                                             runs=runs.get_runs_for_user(id),
-                                            format_time=format_time)
+                                            format_time=format_time,
+                                            allow=allow)
 
     return render_template("error.html", message=f"No user with id { id } could be found.")
 

@@ -8,6 +8,7 @@ def add_run(game_id, time, platform_id, user_id):
 
 def get_runs(game_id):
     sql = """SELECT
+             runs.id,
              users.username AS user,
              user_id,
              time, platforms.name AS platform,
@@ -22,6 +23,7 @@ def get_runs(game_id):
 
 def get_newest_runs():
     sql = """SELECT
+             runs.id,
              users.username AS user,
              user_id,
              time, platforms.name AS platform,
@@ -39,6 +41,7 @@ def get_newest_runs():
 
 def get_runs_for_user(user_id):
     sql = """SELECT
+             runs.id,
              users.username AS user,
              user_id,
              time, platforms.name AS platform,
@@ -53,3 +56,8 @@ def get_runs_for_user(user_id):
              ON runs.game_id = games.id
              WHERE user_id=:user_id ORDER BY game"""
     return db.session.execute(sql, {"user_id":user_id}).fetchall()
+
+def delete_run(id):
+    sql = "DELETE FROM runs WHERE id=:id"
+    db.session.execute(sql, {"id":id})
+    db.session.commit()

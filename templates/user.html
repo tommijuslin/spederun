@@ -8,6 +8,9 @@
     <div class="box-content">
         <table id="games">
             <tr>
+                {% if allow %}
+                <th></th>
+                {% endif %}
                 <th style="text-align: left">Game</th>
                 <th>Time</th>
                 <th>Platform</th>
@@ -15,6 +18,14 @@
             </tr>
             {% for run in runs %}
             <tr>
+                {% if allow %}
+                <td width="1em">
+                    <form action="/delete_run/{{ run.id }}" method="POST">
+                        <input type="submit" value="x" class="delete-button">
+                        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+                    </form>
+                </td>
+                {% endif %}
                 <td style="text-align: left"><a href="/game/{{ run.game_id }}">{{ run.game }}</a></th>
                 <td>{{ format_time(run.time) }}</td>
                 <td>{{ run.platform }}</td>
