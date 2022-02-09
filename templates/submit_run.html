@@ -5,12 +5,13 @@
     <ul class="box-top">
         <li class="box-title">Submit run for {{ game.title }}</li>
     </ul>
-    <div id="error">
-        {% if message %}
-            {% include "error.html" %}
-        {% endif %}
-    </div>
     <div class="box-content">
+        <div id="error">
+            {% if message %}
+                {% include "error_message.html" %}
+                <br>
+            {% endif %}
+        </div>
         <form action="/game/{{ game.id }}/submit_run" method="POST">
             <p>Time:<br>
             <input type="number" min="0" name="hours" placeholder="h" class="input-time" oninput="validity.valid||(value='');"></input>

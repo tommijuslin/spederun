@@ -1,1 +1,17 @@
-<p>{{ message }}</p>
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="box">
+    <ul class="box-top">
+        <li class="box-title">Error</li>
+    </ul>
+    <div class="box-content">
+        <div id="error">
+            {% if message %}
+                {% include "error_message.html" %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

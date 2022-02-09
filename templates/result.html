@@ -5,12 +5,12 @@
     <ul class="box-top">
         <li class="box-title">Search results</li>
     </ul>
-    <div id="error">
-        {% if message %}
-            {% include "error.html" %}
-        {% endif %}
-    </div>
     <div class="box-content">
+        <div id="error">
+            {% if message %}
+                {% include "error_message.html" %}
+            {% endif %}
+        </div>
         {% for game in games %}
         <p><a href="/game/{{ game.id }}">{{ game.title }}</a></p>
         {% endfor %}

@@ -18,6 +18,9 @@ def index():
 
 @app.route("/add_game", methods=["get", "post"])
 def add_game():
+    if not 'user_id' in session:
+        return render_template("error.html", message="You must be logged in to add a game.")
+
     if request.method == "POST":
         title = request.form["title"]
         if len(title) > 50 or len(title) < 1:
@@ -33,6 +36,9 @@ def add_game():
 
 @app.route("/game/<int:id>/submit_run", methods=["get", "post"])
 def submit_run(id):
+    if not 'user_id' in session:
+            return render_template("error.html", message="You must be logged in to submit a run.")
+
     if request.method == "POST":
         time = {
             "hours": validate_time(request.form["hours"]),
@@ -106,7 +112,7 @@ def login():
         if users.login(username, password):
             return redirect("/")
         else:
-            return render_template("login.html", message="Wrong username or password")
+            return render_template("login.html", message="Wrong username or password.")
     
     return render_template("login.html")
 
@@ -124,11 +130,11 @@ def register():
             return render_template("register.html", message="Password must be at least 8 characters long.")
         password2 = request.form["password2"]
         if password1 != password2:
-            return render_template("register.html", message="Passwords don't match")
+            return render_template("register.html", message="Passwords don't match.")
         if users.register(username, password1):
             return redirect("/")
         else:
-            return render_template("register.html", message="Registration failed")
+            return render_template("register.html", message="Registration failed.")
     
     return render_template("register.html")
     

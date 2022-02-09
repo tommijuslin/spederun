@@ -5,12 +5,13 @@
     <ul class="box-top">
         <li class="box-title">Login</li>
     </ul>
-    <div id="error">
-        {% if message %}
-            {% include "error.html" %}
-        {% endif %}
-    </div>
     <div class="box-content">
+        <div id="error">
+            {% if message %}
+                {% include "error_message.html" %}
+                <br>
+            {% endif %}
+        </div>
         <form action="/login" method="POST">
             <p>Username:<br>
             <input type="text" name="username"></p>
