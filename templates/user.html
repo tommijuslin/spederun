@@ -22,6 +22,7 @@
                 <td width="1em">
                     <form action="/delete_run/{{ run.id }}" method="POST">
                         <input type="submit" value="x" class="delete-button">
+                        <input type="hidden" name="user_id" value="{{ session.user_id}}">
                         <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
                     </form>
                 </td>
