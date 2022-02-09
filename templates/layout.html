@@ -1,24 +1,26 @@
 <!doctype html>
 <link rel="stylesheet" href="/static/main.css">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<ul class="navbar">
-    <div>
-        <li><a href="/">Spederun</a></li>
-    </div>
-    <div class="nav-right">
-        <form action="/result" method="get" class="search-form">
-            <input type="text" name="query" placeholder="Game title" style="width: 10em">
-            <input type="submit" value="Search" class="search-button">
-        </form>
-        {% if session.user_id %}
-        <li><a href=/user/{{ session.user_id}}>{{ session.username }}</a></li>
-        <li><a href="/logout">Logout</a></li>
-        {% else %}
-        <li><a href="/login">Login</a></li>
-        <li><a href="/register">Register</a></li>
-        {% endif %}
-    </div>
-</ul>
-
-{% block content %}{% endblock %}
+<body>
+    <ul class="navbar">
+        <div>
+            <li><a href="/">Spederun</a></li>
+        </div>
+        <div class="nav-right">
+            <form action="/result" method="get" class="search-form">
+                <input type="text" name="query" placeholder="Game title" style="width: 10em">
+                <input type="submit" value="Search" class="search-button">
+            </form>
+            {% if session.user_id %}
+            <li><a href=/user/{{ session.user_id}}>{{ session.username }}</a></li>
+            <li><a href="/logout">Logout</a></li>
+            {% else %}
+            <li><a href="/login">Login</a></li>
+            <li><a href="/register">Register</a></li>
+            {% endif %}
+        </div>
+    </ul>
+    {% block content %}
+    {% endblock %}
+</body>
