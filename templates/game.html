@@ -6,13 +6,15 @@
         <li class="box-title">{{ game.title }}</li>
         <li class="box-button"><a href="/game/{{ game.id }}/submit_run">+ Submit Run</a></li>
     </ul>
-    <ul id="category-bar">
-        <li><a href="/game/{{ game.id }}" style="font-weight: bold;">All</a></li>
-        {% for category in categories %}
-        <li><a href="{{ url_for('game', id=game.id, category=category.category_id) }}" style="font-weight: bold;">{{ category.category }}</a></li>
-        {% endfor %}
-        <li><a href="/game/{{ game.id }}/add_category">+ Add Category</a></li>
-    </ul>
+    <div id="category-bar">
+        <ul>
+            <li><a href="/game/{{ game.id }}" style="font-weight: bold;">All</a></li>
+            {% for category in categories %}
+            <li><a href="{{ url_for('game', id=game.id, category=category.category_id) }}" style="font-weight: bold;">{{ category.category }}</a></li>
+            {% endfor %}
+            <li><a href="/game/{{ game.id }}/add_category">+ Add Category</a></li>
+        </ul>
+    </div>
     <div class="box-content">
         <table id="games">
             <tr>

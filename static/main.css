@@ -178,5 +178,11 @@ input {
 
 #category-bar a {
     padding: 7px 10px 7px 10px;
-    font-size: 12px;
+    font-size: 11px;
+}
+
+#category-bar ul, li {
+    display: inline-block;
+    padding: 0;
+    margin: 0;
 }
