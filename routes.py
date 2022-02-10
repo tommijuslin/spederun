@@ -70,15 +70,18 @@ def submit_run(id):
             "seconds": validate_time(request.form["seconds"]),
             "ms": validate_time(request.form["ms"])
         }
+
+        message = None
         
         if NEGATIVE in time:
-            return render_template("submit_run.html", message="Time must be positive.",
-                                                      game=games.get_game(id),
-                                                      platforms=platforms.get_all_platforms(),
-                                                      categories=games_categories.get_all_categories(id))
+            message = "Time must be positive."
+        elif all(value == 0 for value in time.values()):
+            message = "Time must be non-zero."
+        elif not request.form.get('selected_category'):
+            message = "No category selected. If no categories exist, create a new category."
         
-        if all(value == 0 for value in time.values()):
-            return render_template("submit_run.html", message="Time must be non-zero.",
+        if message:
+            return render_template("submit_run.html", message=message,
                                                       game=games.get_game(id),
                                                       platforms=platforms.get_all_platforms(),
                                                       categories=games_categories.get_all_categories(id))
