@@ -6,7 +6,7 @@ Tämänhetkiset ominaisuudet:
 - kirjautuminen ja rekisteröityminen
 - pelin lisääminen
 - speedrun-ajan lisääminen pelille
-- categorian lisääminen pelille
+- kategorian lisääminen pelille
 - etusivulla näkyy viisi uusinta speedrunia
 - pelien hakutoiminto
 
