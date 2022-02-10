@@ -6,12 +6,9 @@ Tämänhetkiset ominaisuudet:
 - kirjautuminen ja rekisteröityminen
 - pelin lisääminen
 - speedrun-ajan lisääminen pelille
+- categorian lisääminen pelille
 - etusivulla näkyy viisi uusinta speedrunia
 - pelien hakutoiminto
-
-Huomioita:
-- speedrunien lisääminen onnistuu vain kirjautuneilta käyttäjiltä, vaikka ohjelma ei tällä hetkellä estä yrittämästä ilman kirjautumista
-- tietoturva-asioita ei ole vielä otettu huomioon
 
 ## Mikä ihmeen spederun?
 
