@@ -247,3 +247,7 @@ def format_title(title):
         return title
 
     return title[:35] + "..."
+
+def logged_in():
+    if not 'user_id' in session:
+        return render_template("error.html", message="You must be logged in to add a game.")

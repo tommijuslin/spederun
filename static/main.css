@@ -6,6 +6,7 @@ body {
     background: rgb(27, 36, 49);
     display: flex;
     justify-content: center;
+    overflow-y: scroll;
 }
 
 #content {
@@ -17,7 +18,7 @@ body {
 .box {
     background-color: rgb(41, 70, 96);
     border-top: 5px solid rgb(224, 179, 255);
-    border-radius: 1px;
+    border-radius: 2px;
     margin-top: 10px;
 }
 
@@ -158,13 +159,24 @@ p {
     color: white;
 }
 
-input {
+input[type=text], input[type=password] {
     padding: 3px 5px;
     width: 20em;
+    border-radius: 2px;
+    margin-top: 5px;
 }
 
-.input-time {
+input[type=number] {
     width: 7em;
+    padding: 3px 5px;
+    border-radius: 2px;
+    margin-top: 5px;
+}
+
+select {
+    padding: 3px 5px;
+    border-radius: 2px;
+    margin-top: 5px;
 }
 
 #error p {
