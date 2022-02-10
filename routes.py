@@ -156,8 +156,11 @@ def result():
 def user(id):
     allow = False
     user=users.get_user(id)
-    if session["user_id"] == id:
-        allow = True
+
+    if "user_id" in session:
+        if session["user_id"] == id:
+            allow = True
+
     if user:
         return render_template("user.html", user=users.get_user(id),
                                             runs=runs.get_runs_for_user(id),
