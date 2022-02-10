@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="box">
+    <ul class="box-top">
+        <li class="box-title">Add category for {{ game.title }}</li>
+    </ul>
+    <div class="box-content">
+        <div id="error">
+            {% if message %}
+                {% include "error_message.html" %}
+                <br>
+            {% endif %}
+        </div>
+        <form action="/game/{{ game.id }}/add_category" method="POST">
+            <p>Category (1-20 characters):<br>
+            <input type="text" name="category"></p>
+            <input type="submit" value="Add" class="button">
+        </form>
+    </div>
+</div>
+
+<a href="/" style="padding: 10px">Back</a>
+
+{% endblock %}

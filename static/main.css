@@ -11,7 +11,7 @@ body {
 #content {
     display: flex;
     flex-direction: column;
-    width: 60em;
+    width: 65em;
 }
 
 .box {
@@ -39,7 +39,6 @@ body {
 
 .box-title {
     color: white;
-    /* text-transform: uppercase; */
     display: block;
     text-align: center;
     padding: 14px 10px;
@@ -63,9 +62,7 @@ ul {
     padding: 0;
 }
 
-
 li a {
-    /* text-transform: uppercase; */
     display: block;
     text-align: center;
     padding: 14px 16px;
@@ -89,15 +86,6 @@ p {
     color: white;
     padding: 4px 0px 4px 0px;
     margin: 0;
-}
-
-h2 {
-    color: white;
-    /* text-transform: uppercase; */
-    margin: 0;
-    padding: 0px 0px 10px 0px;
-    display: flex;
-    flex-direction: row;
 }
 
 .button {
@@ -156,6 +144,10 @@ h2 {
     color: white;
 }
 
+#games table {
+    table-layout: fixed;
+}
+
 #games tr:nth-child(even){background-color: rgb(47, 77, 106);}
 
 #games tr:hover {background-color: rgb(70, 116, 160);}
@@ -177,4 +169,14 @@ input {
 
 #error p {
     color: rgb(255, 109, 109);
+}
+
+#category-bar {
+    display: flex;
+    background-color: #214058;
+}
+
+#category-bar a {
+    padding: 7px 10px 7px 10px;
+    font-size: 12px;
 }

@@ -25,7 +25,7 @@ CREATE TABLE games_platforms (
 
 CREATE TABLE categories (
     id SERIAL PRIMARY KEY,
-    name TEXT
+    category TEXT
 );
 
 CREATE TABLE games_categories (

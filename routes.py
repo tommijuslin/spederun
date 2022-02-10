@@ -6,6 +6,8 @@ import games
 import runs
 import platforms
 import games_platforms
+import categories
+import games_categories
 
 NEGATIVE = -1
 
@@ -15,6 +17,25 @@ def index():
                                          runs=runs.get_newest_runs(),
                                          format_time=format_time,
                                          format_title=format_title)
+
+@app.route("/game/<int:id>")
+def game(id):
+    category_id = request.args.get("category")
+
+    if category_id:
+        filtered_runs = runs.get_runs_for_category(id, category_id)
+    else:
+        filtered_runs = runs.get_runs(id)
+
+    game = games.get_game(id)
+    if game:
+        return render_template("game.html", game=game,
+                                            runs=filtered_runs,
+                                            platforms=games_platforms.get_all_platforms(id),
+                                            categories=games_categories.get_all_categories(id),
+                                            format_time=format_time)
+    
+    return render_template("error.html", message=f"No game with id { id } could be found.")
 
 @app.route("/add_game", methods=["get", "post"])
 def add_game():
@@ -34,12 +55,15 @@ def add_game():
     
     return render_template("add_game.html")
 
+
 @app.route("/game/<int:id>/submit_run", methods=["get", "post"])
 def submit_run(id):
     if not 'user_id' in session:
             return render_template("error.html", message="You must be logged in to submit a run.")
 
     if request.method == "POST":
+        users.check_csrf()
+
         time = {
             "hours": validate_time(request.form["hours"]),
             "minutes": validate_time(request.form["minutes"]),
@@ -50,19 +74,22 @@ def submit_run(id):
         if NEGATIVE in time:
             return render_template("submit_run.html", message="Time must be positive.",
                                                       game=games.get_game(id),
-                                                      platforms=platforms.get_all_platforms())
+                                                      platforms=platforms.get_all_platforms(),
+                                                      categories=games_categories.get_all_categories(id))
         
         if all(value == 0 for value in time.values()):
             return render_template("submit_run.html", message="Time must be non-zero.",
                                                       game=games.get_game(id),
-                                                      platforms=platforms.get_all_platforms())
+                                                      platforms=platforms.get_all_platforms(),
+                                                      categories=games_categories.get_all_categories(id))
 
         converted_time = convert_to_ms(time["hours"], time["minutes"], time["seconds"], time["ms"])
         user_id = request.form["user_id"]
         platform_id = request.form["selected_platform"]
-        runs.add_run(id, converted_time, platform_id, user_id)
+        category_id = request.form["selected_category"]
+        runs.add_run(id, converted_time, platform_id, user_id, category_id)
 
-        if not games_platforms.get_platform(platform_id):
+        if not games_platforms.get_platform(id, platform_id):
             games_platforms.add_platform(id, platform_id)
 
         return redirect(url_for("game", id=id))
@@ -71,27 +98,45 @@ def submit_run(id):
         return render_template("error.html", message=f"No game with id { id } could be found.")
     
     return render_template("submit_run.html", game=games.get_game(id),
-                                              platforms=platforms.get_all_platforms())
+                                              platforms=platforms.get_all_platforms(),
+                                              categories=games_categories.get_all_categories(id))
+
 
 @app.route("/delete_run/<int:id>", methods=["post"])
 def delete_run(id):
     users.check_csrf()
     user_id = request.form["user_id"]
-
     runs.delete_run(id)
 
     return redirect(url_for("user", id=user_id))
 
-@app.route("/game/<int:id>")
-def game(id):
-    game = games.get_game(id)
-    if game:
-        return render_template("game.html", game=game,
-                                            runs=runs.get_runs(id),
-                                            platforms=games_platforms.get_all_platforms(id),
-                                            format_time=format_time)
+
+@app.route("/game/<int:game_id>/add_category", methods=["get", "post"])
+def add_category(game_id):
+    if not 'user_id' in session:
+        return render_template("error.html", message="You must be logged in to add a category.")
+
+    if request.method == "POST":
+        category = request.form["category"]
+
+        if len(category) < 1 or len(category) > 20:
+            return render_template("add_category.html", message="Category name must be 1-20 characters long.",
+                                                        game=games.get_game(game_id))
+
+        category_id = categories.get_category(category)
+
+        if not category_id:
+            category_id = categories.add_category(category)
+        else:
+            category_id = category_id[0]
+        
+        if not games_categories.get_category_for_game(game_id, category_id):
+            games_categories.add_category(game_id, category_id)
+        
+        return redirect(url_for("game", id=game_id))
     
-    return render_template("error.html", message=f"No game with id { id } could be found.")
+    return render_template("add_category.html", game=games.get_game(game_id))
+
 
 @app.route("/result")
 def result():
@@ -102,6 +147,7 @@ def result():
         return render_template("result.html", message="No games found.")
 
     return render_template("result.html", games=games_list)
+
 
 @app.route("/user/<int:id>")
 def user(id):
@@ -117,6 +163,7 @@ def user(id):
 
     return render_template("error.html", message=f"No user with id { id } could be found.")
 
+
 @app.route("/login", methods=["get", "post"])
 def login():
     if request.method == "POST":
@@ -128,6 +175,7 @@ def login():
             return render_template("login.html", message="Wrong username or password.")
     
     return render_template("login.html")
+
 
 @app.route("/register", methods=["get", "post"])
 def register():
@@ -150,7 +198,8 @@ def register():
             return render_template("register.html", message="Registration failed.")
     
     return render_template("register.html")
-    
+
+  
 @app.route("/logout")
 def logout():
     del session["user_id"]

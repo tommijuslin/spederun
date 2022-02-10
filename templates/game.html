@@ -6,14 +6,22 @@
         <li class="box-title">{{ game.title }}</li>
         <li class="box-button"><a href="/game/{{ game.id }}/submit_run">+ Submit Run</a></li>
     </ul>
+    <ul id="category-bar">
+        <li><a href="/game/{{ game.id }}" style="font-weight: bold;">All</a></li>
+        {% for category in categories %}
+        <li><a href="{{ url_for('game', id=game.id, category=category.category_id) }}" style="font-weight: bold;">{{ category.category }}</a></li>
+        {% endfor %}
+        <li><a href="/game/{{ game.id }}/add_category">+ Add Category</a></li>
+    </ul>
     <div class="box-content">
         <table id="games">
             <tr>
-                <th style="width: 10px">Rank</th>
-                <th style="text-align: left">Runner</th>
-                <th>Time</th>
-                <th>Platform</th>
-                <th>Date</th></tgh>
+                <th style="width: 5%">Rank</th>
+                <th style="width: 30%; text-align: left">Runner</th>
+                <th style="width: 15%">Time</th>
+                <th style="width: 20%">Platform</th>
+                <th style="width: 15%">Category</th> 
+                <th style="width: 15%">Date</th></tgh>
             </tr>
             {% for run in runs %}
             <tr>
@@ -21,6 +29,7 @@
                 <td style="text-align: left"><a href="/user/{{ run.user_id }}">{{ run.user }}</a></td>
                 <td>{{ format_time(run.time) }}</td>
                 <td>{{ run.platform }}</td>
+                <td>{{ run.category }}</td>
                 <td>{{ run.date }}</td>
             </tr>
             {% endfor %}
