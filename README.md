@@ -25,7 +25,7 @@ Sivustoa voi selailla vapaasti kirjautumatta.
 ### Kirjautumattoman käyttäjän mahdolliset toiminnot:
 - katso yksittäisen pelin speedruneja klikkaamalla pelin nimeä
 - katso eri kategorioiden speedruneja klikkaamalla haluamaasi kategoriaa pelisivulta
-- katso tietyn käyttäjän speedruneja klikkaamalla käyttäjänänimeä
+- katso tietyn käyttäjän speedruneja klikkaamalla käyttäjänimeä
 - etsi pelejä syöttämällä yläreunassa olevaan hakukenttään pelin nimi (tai osa nimestä)
 
 ### Kirjautuneen käyttäjän toiminnot:
