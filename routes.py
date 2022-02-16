@@ -13,10 +13,14 @@ NEGATIVE = -1
 
 @app.route("/")
 def index():
-    return render_template("index.html", games=games.get_all_games(),
-                                         runs=runs.get_newest_runs(),
-                                         format_time=format_time,
-                                         format_title=format_title)
+    return render_template(
+        "index.html",
+        games=games.get_all_games(),
+        runs=runs.get_newest_runs(),
+        format_time=format_time,
+        format_title=format_title
+    )
+
 
 @app.route("/game/<int:id>")
 def game(id):
@@ -29,23 +33,33 @@ def game(id):
 
     game = games.get_game(id)
     if game:
-        return render_template("game.html", game=game,
-                                            runs=filtered_runs,
-                                            platforms=games_platforms.get_all_platforms(id),
-                                            categories=games_categories.get_all_categories(id),
-                                            format_time=format_time)
+        return render_template(
+            "game.html",
+            game=game,
+            runs=filtered_runs,
+            platforms=games_platforms.get_all_platforms(id),
+            categories=games_categories.get_all_categories(id),
+            format_time=format_time
+        )
     
-    return render_template("error.html", message=f"No game with id { id } could be found.")
+    return render_template(
+        "error.html", message=f"No game with id { id } could be found."
+    )
+
 
 @app.route("/add_game", methods=["get", "post"])
 def add_game():
     if not 'user_id' in session:
-        return render_template("error.html", message="You must be logged in to add a game.")
+        return render_template(
+            "error.html", message="You must be logged in to add a game."
+        )
 
     if request.method == "POST":
         title = request.form["title"]
         if len(title) > 50 or len(title) < 1:
-            return render_template("add_game.html", message="Game title must be 1-50 characters long.")
+            return render_template(
+                "add_game.html", message="Game title must be 1-50 characters long."
+            )
         if games.get_game_by_title(title):
             return render_template("add_game.html", message="Game already exists.")
 
@@ -59,7 +73,9 @@ def add_game():
 @app.route("/game/<int:id>/submit_run", methods=["get", "post"])
 def submit_run(id):
     if not 'user_id' in session:
-            return render_template("error.html", message="You must be logged in to submit a run.")
+            return render_template(
+                "error.html", message="You must be logged in to submit a run."
+            )
 
     if request.method == "POST":
         users.check_csrf()
@@ -81,10 +97,13 @@ def submit_run(id):
             message = "No category selected. If no categories exist, create a new category."
         
         if message:
-            return render_template("submit_run.html", message=message,
-                                                      game=games.get_game(id),
-                                                      platforms=platforms.get_all_platforms(),
-                                                      categories=games_categories.get_all_categories(id))
+            return render_template(
+                "submit_run.html",
+                message=message,
+                game=games.get_game(id),
+                platforms=platforms.get_all_platforms(),
+                categories=games_categories.get_all_categories(id)
+            )
 
         converted_time = convert_to_ms(time["hours"], time["minutes"], time["seconds"], time["ms"])
         user_id = request.form["user_id"]
@@ -100,9 +119,12 @@ def submit_run(id):
     if not games.get_game(id):
         return render_template("error.html", message=f"No game with id { id } could be found.")
     
-    return render_template("submit_run.html", game=games.get_game(id),
-                                              platforms=platforms.get_all_platforms(),
-                                              categories=games_categories.get_all_categories(id))
+    return render_template(
+        "submit_run.html",
+        game=games.get_game(id),
+        platforms=platforms.get_all_platforms(),
+        categories=games_categories.get_all_categories(id)
+    )
 
 
 @app.route("/delete_run/<int:id>", methods=["post"])
@@ -117,14 +139,19 @@ def delete_run(id):
 @app.route("/game/<int:game_id>/add_category", methods=["get", "post"])
 def add_category(game_id):
     if not 'user_id' in session:
-        return render_template("error.html", message="You must be logged in to add a category.")
+        return render_template(
+            "error.html", message="You must be logged in to add a category."
+        )
 
     if request.method == "POST":
         category = request.form["category"]
 
         if len(category) < 1 or len(category) > 20:
-            return render_template("add_category.html", message="Category name must be 1-20 characters long.",
-                                                        game=games.get_game(game_id))
+            return render_template(
+                "add_category.html",
+                message="Category name must be 1-20 characters long.",
+                game=games.get_game(game_id)
+            )
 
         category_id = categories.get_category(category)
 
@@ -155,17 +182,20 @@ def result():
 @app.route("/user/<int:id>")
 def user(id):
     allow = False
-    user=users.get_user(id)
+    user = users.get_user(id)
 
     if "user_id" in session:
         if session["user_id"] == id:
             allow = True
 
     if user:
-        return render_template("user.html", user=users.get_user(id),
-                                            runs=runs.get_runs_for_user(id),
-                                            format_time=format_time,
-                                            allow=allow)
+        return render_template(
+            "user.html",
+            user=users.get_user(id),
+            runs=runs.get_runs_for_user(id),
+            format_time=format_time,
+            allow=allow
+        )
 
     return render_template("error.html", message=f"No user with id { id } could be found.")
 
@@ -188,13 +218,20 @@ def register():
     if request.method == "POST":
         username = request.form["username"]
         if len(username) < 1 or len(username) > 20:
-            return render_template("register.html", message="Username must be 1-20 characters long.")
+            return render_template(
+                "register.html", message="Username must be 1-20 characters long."
+            )
         if users.get_username(username):
-            return render_template("register.html", message="User with that name already exists.")
+            return render_template(
+                "register.html", message="User with that name already exists."
+            )
 
         password1 = request.form["password1"]
         if len(password1) < 8:
-            return render_template("register.html", message="Password must be at least 8 characters long.")
+            return render_template(
+                "register.html",
+                message="Password must be at least 8 characters long."
+            )
         password2 = request.form["password2"]
         if password1 != password2:
             return render_template("register.html", message="Passwords don't match.")
