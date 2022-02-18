@@ -34,7 +34,9 @@ Sivustoa voi selailla vapaasti kirjautumatta.
 - jos pelillä ei ole vielä yhtään kategoriaa, on sellainen lisättävä ennen speedrunin lisäämistä. Lisää kategoria klikkaamalla Add Category -nappia.
 - oman speedrunin poistaminen. Siirry omalle käyttäjäsivullesi painamalla yläreunasta löytyvää käyttäjänimeäsi. Paina haluamasi ajan vieressä olevaa ruksia ja paina OK-nappia.
 
+### Ylläpitäjän toiminnot:
+- pelien, speedrunien ja kategorioiden poistaminen
+
 ## Kehityskohteet
-- ylläpitäjärooli. Ylläpitäjä voi poistaa käyttäjiä, pelejä, sekä speedruneja.
 - speedrunien filtteröinti pelialustan mukaan (näyttää epätodennäköiseltä tällä hetkellä)
 - spagettikoodin siivoaminen
