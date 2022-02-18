@@ -24,6 +24,7 @@
                         <input type="submit" value="x" class="delete-button">
                         <input type="hidden" name="user_id" value="{{ session.user_id}}">
                         <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+                        <input type="hidden" name="user_page" value="1">
                     </form>
                 </td>
                 {% endif %}

@@ -132,10 +132,15 @@ def submit_run(id):
 @app.route("/delete_run/<int:id>", methods=["post"])
 def delete_run(id):
     users.check_csrf()
-    user_id = request.form["user_id"]
     runs.delete_run(id)
 
-    return redirect(url_for("user", id=user_id))
+    print(request.path)
+
+    if "user_page" in request.form:
+        user_id = request.form["user_id"]
+        return redirect(url_for("user", id=user_id))
+
+    return redirect("/")
 
 
 @app.route("/delete_game/<int:id>", methods=["post"])
