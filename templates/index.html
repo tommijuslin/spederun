@@ -34,7 +34,16 @@
     </ul>
     <div class="box-content">
         {% for game in games %}
-        <p><a href="/game/{{ game.id }}">{{ game.title }}</a></p>
+        <p>
+            {% if admin %}
+            <form style="display: inline-block; margin-right: 0.2em" action="/delete_game/{{ game.id }}" method="POST" onsubmit="return confirm('Are you sure you want to delete {{ game.title }}?')">
+                <input type="submit" value="x" class="delete-button">
+                <input type="hidden" name="user_id" value="{{ session.user_id}}">
+                <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+            </form>
+            {% endif %}
+            <a href="/game/{{ game.id }}">{{ game.title }}</a>
+        </p>
         {% endfor %}
     </div>
 </div>

@@ -18,7 +18,8 @@ def index():
         games=games.get_all_games(),
         runs=runs.get_newest_runs(),
         format_time=format_time,
-        format_title=format_title
+        format_title=format_title,
+        admin=users.require_role(1),
     )
 
 
@@ -68,6 +69,14 @@ def add_game():
         return redirect("/")
     
     return render_template("add_game.html")
+
+
+@app.route("/delete_game/<int:id>", methods=["post"])
+def delete_game(id):
+    users.check_csrf()
+    games.delete_game(id)
+
+    return redirect("/")
 
 
 @app.route("/game/<int:id>/submit_run", methods=["get", "post"])

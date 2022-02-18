@@ -22,3 +22,8 @@ def get_game_by_title(title):
 def search_games(query):
     sql = "SELECT id, title FROM games WHERE UPPER(title) LIKE UPPER(:query)"
     return db.session.execute(sql, {"query":"%"+query+"%"}).fetchall()
+
+def delete_game(id):
+    sql = "DELETE FROM games WHERE id=:id"
+    db.session.execute(sql, {"id":id})
+    db.session.commit()
