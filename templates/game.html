@@ -20,7 +20,7 @@
             {% for category in categories %}
             {% if admin %}
             <div>
-                <form style="display: inline-block; margin-left: 0.5em" action="/delete_category/{{ category.category_id }}" method="POST" onsubmit="return confirm('Are you sure you want to delete the category {{ category.category }}?')">
+                <form class="myform" style="display: inline-block; margin-left: 0.5em" action="/delete_category/{{ category.category_id }}" method="POST" onsubmit="return confirm('Are you sure you want to delete the category {{ category.category }}?')">
                     <input type="submit" value="x" class="delete-button">
                     <input type="hidden" name="game_id" value="{{ game.id }}">
                     <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">

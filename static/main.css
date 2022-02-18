@@ -93,13 +93,13 @@ p {
     margin-top: 10px;
     margin-bottom: 4px;
     font-size: 1em;
-    padding: 3px;
-    width: 70px;
+    padding: 3px 10px 3px 10px;
     background-color: rgb(70, 116, 160);
     border: 1px solid #0184BC;
     text-decoration:none;
     color: white;
     text-align: center;
+    border-radius: 2px;
 }
 
 .delete-button {
@@ -164,6 +164,7 @@ input[type=text], input[type=password] {
     width: 20em;
     border-radius: 2px;
     margin-top: 5px;
+    border: 0px;
 }
 
 input[type=number] {
@@ -171,12 +172,14 @@ input[type=number] {
     padding: 3px 5px;
     border-radius: 2px;
     margin-top: 5px;
+    border: 0px;
 }
 
 select {
     padding: 3px 5px;
     border-radius: 2px;
     margin-top: 5px;
+    border: 0px;
 }
 
 #error p {
@@ -197,4 +200,8 @@ select {
     display: inline-block;
     padding: 0;
     margin: 0;
+}
+
+.box-collapsible {
+    display: none;
 }

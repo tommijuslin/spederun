@@ -29,14 +29,48 @@
                     {% for category in categories %}
                     <option value={{ category.category_id }}>{{ category.category }}</option>
                     {% endfor %}
-                </select></p>
-            <input type="submit" value="Add" class="button">
+                </select>
+                <button type="button" class="button collapsible">+</button>
+            </p>
+            <input type="submit" value="Submit" class="button">
             <input type="hidden" name="user_id" value="{{ session.user_id }}">
             <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
         </form>
     </div>
 </div>
 
+<div class="box-collapsible">
+    <div class="box">
+        <div class="box-content">
+            <form id="add_category" action="/game/{{ game.id }}/add_category" method="POST">
+                <p>Category (1-20 characters):<br>
+                <input type="text" name="category"></p>
+                <input type="submit" value="Add" class="button">
+                <input type="hidden" name="submit_page" value="1">
+            </form>
+        </div>
+    </div>
+</div>
+
 <a href="/game/{{ game.id }}" style="padding: 10px">< Back</a>
+
+<script type="text/javascript">
+    var coll = document.getElementsByClassName("collapsible");
+    var i;
+    
+    for (i = 0; i < coll.length; i++) {
+      coll[i].addEventListener("click", function() {
+        this.classList.toggle("active");
+        var content = document.getElementsByClassName("box-collapsible")[0];
+        if (content.style.display === "block") {
+          content.style.display = "none";
+        } else {
+          content.style.display = "block";
+        }
+      });
+    }
+
+    document.getElementById("add_category").event.preventDefault.submit();
+</script>
 
 {% endblock %}
