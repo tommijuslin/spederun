@@ -43,29 +43,3 @@ CREATE TABLE runs (
     platform_id INTEGER REFERENCES platforms,
     category_id INTEGER REFERENCES categories
 );
-
-INSERT INTO platforms (name)
-VALUES
-    ('PC'),
-    ('PlayStation 1'),
-    ('PlayStation 2'),
-    ('PlayStation 3'),
-    ('PlayStation 4'),
-    ('PlayStation 5'),
-    ('PlayStation Portable'),
-    ('PlayStation Vita'),
-    ('NES'),
-    ('Super Nintendo'),
-    ('Nintendo 64'),
-    ('Nintendo Gamecube'),
-    ('Nintendo Wii'),
-    ('Nintendo Wii U'),
-    ('Nintendo Switch'),
-    ('Nintendo Game Boy'),
-    ('Nintendo Game Boy Advance'),
-    ('Nintendo DS'),
-    ('Nintendo 3DS'),
-    ('Xbox'),
-    ('Xbox 360'),
-    ('Xbox One'),
-    ('Xbox Series X');
