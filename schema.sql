@@ -18,7 +18,7 @@ CREATE TABLE platforms (
 );
 
 CREATE TABLE games_platforms (
-    game_id INTEGER REFERENCES games,
+    game_id INTEGER REFERENCES games ON DELETE CASCADE,
     platform_id INTEGER REFERENCES platforms,
     PRIMARY KEY (game_id, platform_id)
 );
@@ -30,7 +30,7 @@ CREATE TABLE categories (
 
 CREATE TABLE games_categories (
     id SERIAL PRIMARY KEY,
-    game_id INTEGER REFERENCES games,
+    game_id INTEGER REFERENCES games ON DELETE CASCADE,
     category_id INTEGER REFERENCES categories
 );
 
@@ -39,7 +39,7 @@ CREATE TABLE runs (
     time REAL,
     date TIMESTAMP,
     user_id INTEGER REFERENCES users,
-    game_id INTEGER REFERENCES games,
+    game_id INTEGER REFERENCES games ON DELETE CASCADE,
     platform_id INTEGER REFERENCES platforms,
     category_id INTEGER REFERENCES categories
 );

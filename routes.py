@@ -185,7 +185,7 @@ def user(id):
     user = users.get_user(id)
 
     if "user_id" in session:
-        if session["user_id"] == id:
+        if session["user_id"] == id or users.require_role(1):
             allow = True
 
     if user:
@@ -247,6 +247,7 @@ def register():
 def logout():
     del session["user_id"]
     del session["username"]
+    del session["user_role"]
     return redirect("/")
 
 def convert_to_ms(hours, minutes, seconds, ms):
@@ -284,7 +285,3 @@ def format_title(title):
         return title
 
     return title[:35] + "..."
-
-def logged_in():
-    if not 'user_id' in session:
-        return render_template("error.html", message="You must be logged in to add a game.")
