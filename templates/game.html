@@ -3,7 +3,15 @@
 
 <div class="box">
     <ul class="box-top">
-        <li class="box-title">{{ game.title }}</li>
+        <li class="box-title">
+            {% if admin %}
+            <form style="display: inline-block; margin-right: 0.2em" action="/delete_game/{{ game.id }}" method="POST" onsubmit="return confirm('Are you sure you want to delete {{ game.title }}?')">
+                <input type="submit" value="x" class="delete-button">
+                <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+            </form>
+            {% endif %}
+            {{ game.title }}
+        </li>
         <li class="box-button"><a href="/game/{{ game.id }}/submit_run">+ Submit Run</a></li>
     </ul>
     <div id="category-bar">
@@ -29,6 +37,9 @@
     <div class="box-content">
         <table id="games">
             <tr>
+                {% if admin %}
+                <th></th>
+                {% endif %}
                 <th style="width: 5%">Rank</th>
                 <th style="width: 30%; text-align: left">Runner</th>
                 <th style="width: 15%">Time</th>
@@ -38,6 +49,16 @@
             </tr>
             {% for run in runs %}
             <tr>
+                {% if admin %}
+                <td width="1em">
+                    <form action="/delete_run/{{ run.id }}" method="POST" onsubmit="return confirm('Are you sure you want to delete the run for {{ game.title }}?')">
+                        <input type="submit" value="x" class="delete-button">
+                        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+                        <input type="hidden" name="game_id" value="{{ game.id }}">
+                        <input type="hidden" name="game_page" value="1">
+                    </form>
+                </td>
+                {% endif %}
                 <td style="width: 10px">{{ loop.index }}</td>
                 <td style="text-align: left"><a href="/user/{{ run.user_id }}">{{ run.user }}</a></td>
                 <td>{{ format_time(run.time) }}</td>

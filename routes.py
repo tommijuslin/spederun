@@ -137,8 +137,10 @@ def delete_run(id):
     print(request.path)
 
     if "user_page" in request.form:
-        user_id = request.form["user_id"]
-        return redirect(url_for("user", id=user_id))
+        return redirect(url_for("user", id=request.form["user_id"]))
+    
+    if "game_page" in request.form:
+        return redirect(url_for("game", id=request.form["game_id"]))
 
     return redirect("/")
 
