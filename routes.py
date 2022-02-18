@@ -40,7 +40,8 @@ def game(id):
             runs=filtered_runs,
             platforms=games_platforms.get_all_platforms(id),
             categories=games_categories.get_all_categories(id),
-            format_time=format_time
+            format_time=format_time,
+            admin=users.require_role(1)
         )
     
     return render_template(
@@ -69,14 +70,6 @@ def add_game():
         return redirect("/")
     
     return render_template("add_game.html")
-
-
-@app.route("/delete_game/<int:id>", methods=["post"])
-def delete_game(id):
-    users.check_csrf()
-    games.delete_game(id)
-
-    return redirect("/")
 
 
 @app.route("/game/<int:id>/submit_run", methods=["get", "post"])
@@ -143,6 +136,22 @@ def delete_run(id):
     runs.delete_run(id)
 
     return redirect(url_for("user", id=user_id))
+
+
+@app.route("/delete_game/<int:id>", methods=["post"])
+def delete_game(id):
+    users.check_csrf()
+    games.delete_game(id)
+
+    return redirect("/")
+
+
+@app.route("/delete_category/<int:id>", methods=["post"])
+def delete_category(id):
+    users.check_csrf()
+    categories.delete_category(id)
+
+    return redirect(url_for("game", id=request.form["game_id"]))
 
 
 @app.route("/game/<int:game_id>/add_category", methods=["get", "post"])
