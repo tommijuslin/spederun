@@ -93,3 +93,8 @@ def delete_run(id):
     sql = "DELETE FROM runs WHERE id=:id"
     db.session.execute(sql, {"id":id})
     db.session.commit()
+
+def delete_runs_for_category(game_id, category_id):
+    sql = "DELETE FROM runs WHERE game_id=:game_id AND category_id=:category_id"
+    db.session.execute(sql, {"game_id":game_id, "category_id":category_id})
+    db.session.commit()

@@ -17,3 +17,8 @@ def get_all_categories(game_id):
              WHERE game_id=:game_id
              ORDER BY categories.category"""
     return db.session.execute(sql, {"game_id":game_id}).fetchall()
+
+def delete_category(game_id, category_id):
+    sql = "DELETE FROM games_categories WHERE game_id=:game_id AND category_id=:category_id"
+    db.session.execute(sql, {"game_id":game_id, "category_id":category_id})
+    db.session.commit()

@@ -154,9 +154,11 @@ def delete_game(id):
 @app.route("/delete_category/<int:id>", methods=["post"])
 def delete_category(id):
     users.check_csrf()
-    categories.delete_category(id)
+    game_id = request.form["game_id"]
+    games_categories.delete_category(game_id, id)
+    runs.delete_runs_for_category(game_id, id)
 
-    return redirect(url_for("game", id=request.form["game_id"]))
+    return redirect(url_for("game", id=game_id))
 
 
 @app.route("/game/<int:game_id>/add_category", methods=["get", "post"])
