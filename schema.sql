@@ -29,9 +29,9 @@ CREATE TABLE categories (
 );
 
 CREATE TABLE games_categories (
-    id SERIAL PRIMARY KEY,
     game_id INTEGER REFERENCES games ON DELETE CASCADE,
-    category_id INTEGER REFERENCES categories ON DELETE CASCADE
+    category_id INTEGER REFERENCES categories ON DELETE CASCADE,
+    PRIMARY KEY (game_id, category_id)
 );
 
 CREATE TABLE runs (
