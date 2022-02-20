@@ -5,9 +5,7 @@ import users
 import games
 import runs
 import platforms
-import games_platforms
 import categories
-import games_categories
 
 
 NEGATIVE = -1
@@ -44,7 +42,7 @@ def submit_run(id):
                 message=message,
                 game=games.get_game(id),
                 platforms=platforms.get_all_platforms(),
-                categories=games_categories.get_all_categories(id)
+                categories=games.get_all_categories(id)
             )
 
         converted_time = convert_to_ms(time["hours"], time["minutes"], time["seconds"], time["ms"])
@@ -53,8 +51,8 @@ def submit_run(id):
         category_id = request.form["selected_category"]
         runs.add_run(id, converted_time, platform_id, user_id, category_id)
 
-        if not games_platforms.get_platform(id, platform_id):
-            games_platforms.add_platform(id, platform_id)
+        if not games.get_platform(id, platform_id):
+            games.add_platform(id, platform_id)
 
         return redirect(url_for("game", id=id))
     
@@ -65,7 +63,7 @@ def submit_run(id):
         "submit_run.html",
         game=games.get_game(id),
         platforms=platforms.get_all_platforms(),
-        categories=games_categories.get_all_categories(id)
+        categories=games.get_all_categories(id)
     )
 
 

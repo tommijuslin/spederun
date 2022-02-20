@@ -4,7 +4,6 @@ import users
 import games
 import runs
 import categories
-import games_categories
 
 
 @app.route("/game/<int:game_id>/add_category", methods=["get", "post"])
@@ -31,8 +30,8 @@ def add_category(game_id):
         else:
             category_id = category_id[0]
         
-        if not games_categories.get_category_for_game(game_id, category_id):
-            games_categories.add_category(game_id, category_id)
+        if not games.get_category(game_id, category_id):
+            games.add_category(game_id, category_id)
         
         if "submit_page" in request.form:
             return redirect(url_for("submit_run", id=game_id))
@@ -46,7 +45,7 @@ def add_category(game_id):
 def delete_category(id):
     users.check_csrf()
     game_id = request.form["game_id"]
-    games_categories.delete_category(game_id, id)
+    games.delete_category(game_id, id)
     runs.delete_runs_for_category(game_id, id)
 
     return redirect(url_for("game", id=game_id))

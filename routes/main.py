@@ -4,10 +4,6 @@ from utils import format_time, format_title
 import users
 import games
 import runs
-import platforms
-import games_platforms
-import categories
-import games_categories
 
 
 @app.route("/")

@@ -5,9 +5,7 @@ import users
 import games
 import runs
 import platforms
-import games_platforms
 import categories
-import games_categories
 
 
 @app.route("/game/<int:id>")
@@ -25,8 +23,8 @@ def game(id):
             "game.html",
             game=game,
             runs=filtered_runs,
-            platforms=games_platforms.get_all_platforms(id),
-            categories=games_categories.get_all_categories(id),
+            platforms=games.get_all_platforms(id),
+            categories=games.get_all_categories(id),
             format_time=format_time,
             admin=users.require_role(1)
         )
