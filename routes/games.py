@@ -1,5 +1,5 @@
 from app import app
-from flask import render_template, request, redirect, session
+from flask import render_template, request, redirect, session, jsonify, make_response
 from utils import format_time
 import users
 import games
@@ -42,24 +42,24 @@ def add_game():
         )
 
     if request.method == "POST":
-        title = request.form["title"]
+        req = request.get_json()
+        title = req["title"]
+
         if len(title) > 50 or len(title) < 1:
-            return render_template(
-                "add_game.html", message="Game title must be 1-50 characters long."
-            )
-        if games.get_game_by_title(title):
-            return render_template("add_game.html", message="Game already exists.")
+            return make_response(jsonify({"message": "Game title must be 1-50 characters long."}))
+        elif games.get_game_by_title(title):
+            return make_response(jsonify({"message": "Game already exists."}))
 
-        games.add_game(title)
+        game_id = games.add_game(title)
 
-        return redirect("/")
+        return make_response(jsonify({"redirect": f"/game/{ game_id }"}))
     
     return render_template("add_game.html")
 
 
 @app.route("/delete_game/<int:id>", methods=["post"])
 def delete_game(id):
-    users.check_csrf()
+    users.check_csrf(request.form["csrf_token"])
     games.delete_game(id)
 
     return redirect("/")

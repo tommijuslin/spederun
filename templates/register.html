@@ -6,8 +6,8 @@
         <li class="box-title">Register</li>
     </ul>
     <div class="box-content">
-        <div id="error">
-            <span id="error-message"></span>
+        <div class="error">
+            <p id="error-message"></p>
         </div>
         <div>
             <p>Username (1-20 characters):<br>
@@ -20,6 +20,8 @@
         </div>
     </div>
 </div>
+
+<a href="/" style="padding: 10px">< Back</a>
 
 <script>
     function handleEnter(event) {
@@ -51,7 +53,7 @@
             if (data.redirect) {
                 window.location.replace(data.redirect);
             } else {
-                document.getElementById("error-message").innerHTML = data.message;
+                showErrorMsg(data.message);
             }
         })
     }

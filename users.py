@@ -37,8 +37,8 @@ def get_user(id):
     sql = "SELECT id, username FROM users WHERE id=:id"
     return db.session.execute(sql, {"id":id}).fetchone()
 
-def check_csrf():
-    if session["csrf_token"] != request.form["csrf_token"]:
+def check_csrf(token):
+    if session["csrf_token"] != token:
         abort(403)
 
 def require_role(role):

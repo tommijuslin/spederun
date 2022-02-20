@@ -6,48 +6,45 @@
         <li class="box-title">Submit run for {{ game.title }}</li>
     </ul>
     <div class="box-content">
-        <div id="error">
-            {% if message %}
-                {% include "error_message.html" %}
-                <br>
-            {% endif %}
+        <div class="error">
+            <p id="error-message"></p>
         </div>
-        <form action="/game/{{ game.id }}/submit_run" method="POST">
+        <div class="success">
+            <p id="success-message"></p>
+        </div>
+        <div>
             <p>Time:<br>
-            <input type="number" min="0" name="hours" placeholder="h" class="input-time" oninput="validity.valid||(value='');"></input>
-            <input type="number" min="0" name="minutes" placeholder="m" class="input-time" oninput="validity.valid||(value='');"></input>
-            <input type="number" min="0" name="seconds" placeholder="s" class="input-time" oninput="validity.valid||(value='');"></input>
-            <input type="number" min="0" name="ms" placeholder="ms" class="input-time" oninput="validity.valid||(value='');"></input></p>
+            <input type="number" min="0" name="hours" id="hours" placeholder="h" class="input-time" oninput="validity.valid||(value='');" onkeydown="handleSubmitRun(event)"></input>
+            <input type="number" min="0" name="minutes" id="minutes" placeholder="m" class="input-time" oninput="validity.valid||(value='');" onkeydown="handleSubmitRun(event)"></input>
+            <input type="number" min="0" name="seconds" id="seconds" placeholder="s" class="input-time" oninput="validity.valid||(value='');" onkeydown="handleSubmitRun(event)"></input>
+            <input type="number" min="0" name="ms" id="ms" placeholder="ms" class="input-time" oninput="validity.valid||(value='');" onkeydown="handleSubmitRun(event)"></input></p>
             <p>Platform:<br>
-            <select name="selected_platform">
+            <select name="selected_platform" id="selected_platform">
                 {% for platform in platforms %}
                 <option value={{ platform.id }}>{{ platform.name }}</option>
                 {% endfor %}
             </select></p>
             <p>Category:<br>
-                <select name="selected_category">
+                <select name="selected_category" id="selected_category">
                     {% for category in categories %}
                     <option value={{ category.category_id }}>{{ category.category }}</option>
                     {% endfor %}
                 </select>
-                <button type="button" class="button collapsible">+</button>
+                <button type="button" class="button collapsible">+ Add Category</button>
             </p>
-            <input type="submit" value="Submit" class="button">
-            <input type="hidden" name="user_id" value="{{ session.user_id }}">
-            <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
-        </form>
+            <input type="hidden" name="user_id" id="user_id" value="{{ session.user_id }}">
+            <input type="hidden" name="csrf_token" id="csrf_token" value="{{ session.csrf_token }}">
+            <input type="submit" value="Submit" class="button" onclick="submitRun();">
+        </div>
     </div>
 </div>
 
 <div class="box-collapsible">
     <div class="box">
         <div class="box-content">
-            <form id="add_category" action="/game/{{ game.id }}/add_category" method="POST">
-                <p>Category (1-20 characters):<br>
-                <input type="text" name="category"></p>
-                <input type="submit" value="Add" class="button">
-                <input type="hidden" name="submit_page" value="1">
-            </form>
+            <p>Category (1-20 characters):<br>
+            <input type="text" name="category" id="category" onkeydown="handleAddCategory(event)"></p>
+            <input type="submit" value="Add" class="button" onclick="addCategory();">
         </div>
     </div>
 </div>
@@ -70,7 +67,81 @@
       });
     }
 
-    document.getElementById("add_category").event.preventDefault.submit();
+    function handleSubmitRun(event) {
+        if (event.keyCode === 13) {
+            submitRun();
+        }
+    }
+
+    function submitRun() {
+        var hours = document.getElementById("hours");
+        var minutes = document.getElementById("minutes");
+        var seconds = document.getElementById("seconds");
+        var ms = document.getElementById("ms");
+        var selected_platform = document.getElementById("selected_platform");
+        var selected_category = document.getElementById("selected_category");
+        var user_id = document.getElementById("user_id");
+        var csrf_token = document.getElementById("csrf_token");
+
+        var data = {
+            hours: hours.value,
+            minutes: minutes.value,
+            seconds: seconds.value,
+            ms: ms.value,
+            selected_platform: selected_platform.value,
+            selected_category: selected_category.value,
+            user_id: user_id.value,
+            csrf_token: csrf_token.value,
+        };
+
+        fetch("/game/{{ game.id }}/submit_run", {
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: new Headers({
+                "content-type": "application/json"
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.redirect) {
+                window.location.replace(data.redirect);
+            } else {
+                showErrorMsg(data.message);
+            }
+        })
+    }
+
+    function handleAddCategory(event) {
+        if (event.keyCode === 13) {
+            addCategory();
+        }
+    }
+
+    function addCategory() {
+        var category = document.getElementById("category");
+
+        var data = {
+            category: category.value
+        };
+
+        fetch("/game/{{ game.id }}/add_category", {
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: new Headers({
+                "content-type": "application/json"
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.new) {
+                showSuccessMsg(data.message)
+                document.getElementById("selected_category").add(new Option(data.category, data.category_id));
+                document.getElementById("category").value = "";
+            } else {
+                showErrorMsg(data.message)
+            }
+        })
+    }
 </script>
 
 {% endblock %}

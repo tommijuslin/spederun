@@ -1,5 +1,5 @@
 from app import app
-from flask import render_template, request, redirect, session, url_for
+from flask import render_template, request, redirect, session, url_for, jsonify, make_response
 import users
 import games
 import runs
@@ -14,14 +14,11 @@ def add_category(game_id):
         )
 
     if request.method == "POST":
-        category = request.form["category"]
+        req = request.get_json()
+        category = req["category"]
 
         if len(category) < 1 or len(category) > 20:
-            return render_template(
-                "add_category.html",
-                message="Category name must be 1-20 characters long.",
-                game=games.get_game(game_id)
-            )
+            return make_response(jsonify({"message": "Category name must be 1-20 characters long."}))
 
         category_id = categories.get_category(category)
 
@@ -30,20 +27,28 @@ def add_category(game_id):
         else:
             category_id = category_id[0]
         
+        new_category = False
+        message = None
+
         if not games.get_category(game_id, category_id):
             games.add_category(game_id, category_id)
-        
-        if "submit_page" in request.form:
-            return redirect(url_for("submit_run", id=game_id))
+            new_category = True
+            message = "Category added."
 
-        return redirect(url_for("game", id=game_id))
+        return make_response(jsonify({
+            "redirect": f'/game/{ game_id }',
+            "category_id": category_id,
+            "category": category,
+            "new": new_category,
+            "message": message,
+        }))
     
     return render_template("add_category.html", game=games.get_game(game_id))
 
 
 @app.route("/delete_category/<int:id>", methods=["post"])
 def delete_category(id):
-    users.check_csrf()
+    users.check_csrf(request.form["csrf_token"])
     game_id = request.form["game_id"]
     games.delete_category(game_id, id)
     runs.delete_runs_for_category(game_id, id)

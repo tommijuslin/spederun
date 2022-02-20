@@ -20,6 +20,7 @@ body {
     border-top: 5px solid rgb(224, 179, 255);
     border-radius: 2px;
     margin-top: 10px;
+    padding-bottom: 5px;
 }
 
 .box-content {
@@ -182,8 +183,12 @@ select {
     border: 0px;
 }
 
-#error p, span {
+.error p {
     color: rgb(255, 109, 109);
+}
+
+.success p {
+    color: rgb(109, 255, 194);
 }
 
 #category-bar {

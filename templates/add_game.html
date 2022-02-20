@@ -6,20 +6,49 @@
         <li class="box-title">Add game</li>
     </ul>
     <div class="box-content">
-        <div id="error">
-            {% if message %}
-                {% include "error_message.html" %}
-                <br>
-            {% endif %}
+        <div class="error">
+            <p id="error-message"></p>
         </div>
-        <form action="/add_game" method="POST">
+        <div>
             <p>Title:<br>
-            <input type="text" name="title"></p>
-            <input type="submit" value="Add" class="button">
-        </form>
+            <input type="text" name="title" id="title" onkeydown="handleEnter(event)"></p>
+            <input type="submit" value="Add" class="button" onclick="addGame();">
+        </div>
     </div>
 </div>
 
 <a href="/" style="padding: 10px">< Back</a>
+
+<script>
+    function handleEnter(event) {
+        if (event.keyCode === 13) {
+            addGame();
+        }
+    }
+
+    function addGame() {
+        var title = document.getElementById("title");
+
+        var data = {
+            title: title.value
+        };
+
+        fetch("/add_game", {
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: new Headers({
+                "content-type": "application/json"
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.redirect) {
+                window.location.replace(data.redirect);
+            } else {
+                showErrorMsg(data.message);
+            }
+        })
+    }
+</script>
 
 {% endblock %}

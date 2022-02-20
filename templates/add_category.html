@@ -6,20 +6,49 @@
         <li class="box-title">Add category for {{ game.title }}</li>
     </ul>
     <div class="box-content">
-        <div id="error">
-            {% if message %}
-                {% include "error_message.html" %}
-                <br>
-            {% endif %}
+        <div class="error">
+            <p id="error-message"></p>
         </div>
-        <form action="/game/{{ game.id }}/add_category" method="POST">
+        <div>
             <p>Category (1-20 characters):<br>
-            <input type="text" name="category"></p>
-            <input type="submit" value="Add" class="button">
-        </form>
+            <input type="text" name="category" id="category" onkeydown="handleAddCategory(event)"></p>
+            <input type="submit" value="Add" class="button" onclick="addCategory();">
+        </div>
     </div>
 </div>
 
 <a href="/game/{{ game.id }}" style="padding: 10px">< Back</a>
+
+<script>
+    function handleAddCategory(event) {
+        if (event.keyCode === 13) {
+            addCategory();
+        }
+    }
+
+    function addCategory() {
+        var category = document.getElementById("category");
+
+        var data = {
+            category: category.value
+        };
+
+        fetch("/game/{{ game.id }}/add_category", {
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: new Headers({
+                "content-type": "application/json"
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.redirect) {
+                window.location.replace(data.redirect);
+            } else {
+                showErrorMsg(data.message);
+            }
+        })
+    }
+</script>
 
 {% endblock %}

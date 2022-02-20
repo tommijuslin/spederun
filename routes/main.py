@@ -24,6 +24,6 @@ def result():
     games_list = games.search_games(query)
 
     if not games_list:
-        return render_template("result.html", message="No games found.")
+        return render_template("error.html", message="No games found.")
 
     return render_template("result.html", games=games_list)

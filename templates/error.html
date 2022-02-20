@@ -6,10 +6,8 @@
         <li class="box-title">Error</li>
     </ul>
     <div class="box-content">
-        <div id="error">
-            {% if message %}
-                {% include "error_message.html" %}
-            {% endif %}
+        <div class="error">
+            <p>{{ message }}</p>
         </div>
     </div>
 </div>
