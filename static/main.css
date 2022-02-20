@@ -182,7 +182,7 @@ select {
     border: 0px;
 }
 
-#error p {
+#error p, span {
     color: rgb(255, 109, 109);
 }
 

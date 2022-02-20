@@ -7,21 +7,54 @@
     </ul>
     <div class="box-content">
         <div id="error">
-            {% if message %}
-                {% include "error_message.html" %}
-                <br>
-            {% endif %}
+            <span id="error-message"></span>
         </div>
-        <form action="/register" method="POST">
+        <div>
             <p>Username (1-20 characters):<br>
-            <input type="text" name="username"></p>
+            <input type="text" name="username" id="username" onkeydown="handleEnter(event)"></p>
             <p>Password (8 characters minimum):<br>
-            <input type="password" name="password1"></p>
+            <input type="password" name="password1" id="password1" onkeydown="handleEnter(event)"></p>
             <p>Re-enter password:<br>
-            <input type="password" name="password2"></p>
-            <input type="submit" value="Register" class="button">
-        </form>
+            <input type="password" name="password2" id="password2" onkeydown="handleEnter(event)"></p>
+            <input type="submit" value="Register" class="button" id="register-button" onclick="register();">
+        </div>
     </div>
 </div>
+
+<script>
+    function handleEnter(event) {
+        if (event.keyCode === 13) {
+            register();
+        }
+    }
+
+    function register() {
+        var username = document.getElementById("username");
+        var password1 = document.getElementById("password1");
+        var password2 = document.getElementById("password2");
+
+        var data = {
+            username: username.value,
+            password1: password1.value,
+            password2: password2.value
+        };
+
+        fetch("/register", {
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: new Headers({
+                "content-type": "application/json"
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.redirect) {
+                window.location.replace(data.redirect);
+            } else {
+                document.getElementById("error-message").innerHTML = data.message;
+            }
+        })
+    }
+</script>
 
 {% endblock %}

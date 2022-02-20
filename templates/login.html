@@ -7,19 +7,50 @@
     </ul>
     <div class="box-content">
         <div id="error">
-            {% if message %}
-                {% include "error_message.html" %}
-                <br>
-            {% endif %}
+            <span id="error-message"></span>
         </div>
-        <form action="/login" method="POST">
+        <div>
             <p>Username:<br>
-            <input type="text" name="username"></p>
+            <input type="text" name="username" id="username" onkeydown="handleEnter(event)"></p>
             <p>Password:<br>
-            <input type="password" name="password"></p>
-            <input type="submit" value="Login" class="button">
-        </form>
+            <input type="password" name="password" id="password" onkeydown="handleEnter(event)"></p>
+            <button id="login-button" class="button" onclick="login();">Login</button>
+        </div>
     </div>
 </div>
+
+<script>
+    function handleEnter(event) {
+        if (event.keyCode === 13) {
+            login();
+        }
+    }
+
+    function login() {
+        var username = document.getElementById("username");
+        var password = document.getElementById("password");
+
+        var data = {
+            username: username.value,
+            password: password.value
+        };
+
+        fetch("/login", {
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: new Headers({
+                "content-type": "application/json"
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.redirect) {
+                window.location.replace(data.redirect);
+            } else {
+                document.getElementById("error-message").innerHTML = data.message;
+            }
+        })
+    }
+</script>
 
 {% endblock %}

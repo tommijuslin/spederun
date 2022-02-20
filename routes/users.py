@@ -1,5 +1,5 @@
 from app import app
-from flask import render_template, request, redirect, session
+from flask import render_template, request, redirect, session, jsonify, make_response
 from utils import format_time
 import users
 import runs
@@ -29,12 +29,12 @@ def user(id):
 @app.route("/login", methods=["get", "post"])
 def login():
     if request.method == "POST":
-        username = request.form["username"]
-        password = request.form["password"]
-        if users.login(username, password):
-            return redirect("/")
+        req = request.get_json()
+
+        if users.login(req["username"], req["password"]):
+            return make_response(jsonify({"redirect": "/"}))
         else:
-            return render_template("login.html", message="Wrong username or password.")
+            return make_response(jsonify({"message": "Wrong username or password."}))
     
     return render_template("login.html")
 
@@ -42,30 +42,29 @@ def login():
 @app.route("/register", methods=["get", "post"])
 def register():
     if request.method == "POST":
-        username = request.form["username"]
-        if len(username) < 1 or len(username) > 20:
-            return render_template(
-                "register.html", message="Username must be 1-20 characters long."
-            )
-        if users.get_username(username):
-            return render_template(
-                "register.html", message="User with that name already exists."
-            )
+        req = request.get_json()
 
-        password1 = request.form["password1"]
-        if len(password1) < 8:
-            return render_template(
-                "register.html",
-                message="Password must be at least 8 characters long."
-            )
-        password2 = request.form["password2"]
-        if password1 != password2:
-            return render_template("register.html", message="Passwords don't match.")
+        username = req["username"]
+        password1 = req["password1"]
+        password2 = req["password2"]
+
+        message = None
+
+        if len(username) < 1 or len(username) > 20:
+            message = "Username must be 1-20 characters long."
+        elif users.get_username(username):
+            message="User with that name already exists."
+        elif len(password1) < 8:
+            message="Password must be at least 8 characters long."
+        elif password1 != password2:
+            message="Passwords don't match."
+
+        if message:
+            return make_response(jsonify({"message": message}))
+
         if users.register(username, password1):
-            return redirect("/")
-        else:
-            return render_template("register.html", message="Registration failed.")
-    
+            return make_response(jsonify({"redirect": "/"}))
+            
     return render_template("register.html")
 
   

@@ -13,9 +13,9 @@ NEGATIVE = -1
 @app.route("/game/<int:id>/submit_run", methods=["get", "post"])
 def submit_run(id):
     if not 'user_id' in session:
-            return render_template(
-                "error.html", message="You must be logged in to submit a run."
-            )
+        return render_template(
+            "error.html", message="You must be logged in to submit a run."
+        )
 
     if request.method == "POST":
         users.check_csrf()
@@ -71,8 +71,6 @@ def submit_run(id):
 def delete_run(id):
     users.check_csrf()
     runs.delete_run(id)
-
-    print(request.path)
 
     if "user_page" in request.form:
         return redirect(url_for("user", id=request.form["user_id"]))
