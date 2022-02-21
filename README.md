@@ -7,6 +7,9 @@ Rekisteröidy/kirjaudu normaalisti tai testaa ohjelmaa ylläpitäjänä:
 - käyttäjänimi: admin
 - salasana: admin
 
+Bugeja:
+- kirjautumis- ja rekisteröitymissivuille pääsee kirjautuneena osoiterivin kautta
+
 ## Mikä ihmeen spederun?
 
 Spederun on sovellus, joka pitää kirjaa videopelien [speedrun](https://en.wikipedia.org/wiki/Speedrun)-ennätyksistä. Speedruneissa on tarkoitus pelata peli tai sen osa läpi mahdollisimman nopeasti.
